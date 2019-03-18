@@ -1,0 +1,20 @@
+{
+  "data": {
+    "name": "Tugberk",
+    "surname": "Goc",
+    "releaseDate": "2014-06-25T00:00:00.000Z",
+    "isUser": true,
+    "x": "2",
+    "y": "3",
+    "z": "4"
+  },
+  "data2": {
+    "name": "Tugce",
+    "surname": "Merve",
+    "releaseDate": "2014-06-24T00:00:00.000Z",
+    "isUser": false,
+    "x": "4",
+    "y": "5",
+    "z": "8"
+  }
+}
