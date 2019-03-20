@@ -33,20 +33,14 @@
 
       >
       </ag-grid-vue>
-
-
     </div>
-
     <!--<div class="container" style=" padding-top: 4px; top: 0px; left: 0px;"> &lt;!&ndash; position: absolute; &ndash;&gt;-->
       <!--<v-btn style="background: #f44336" v-on:click="onUpdateSomeValues()">Update Some D &amp; E Values</v-btn>-->
     <!--</div>-->
-
     <div>
       <RotatingPieChart v-if="isPie" :data="data" >
-
       </RotatingPieChart>
     </div>
-
   </v-container>
 </template>
 
