@@ -1,25 +1,14 @@
 <template>
   <v-container>
-
-
     <div class="container">
-
-
       <div class="md-top-left">
-
-
         <v-label>Upload File Here
           <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
         </v-label>
-
         <br>
-
         <v-btn flat prominent style="background: #f44336;" v-on:click="submitFile()">Submit</v-btn>
-
       </div>
     </div>
-
-
     <div style="height: 100%; padding-top: 40px; box-sizing: border-box; background: #ffffff; padding-left: 40px;">
       <ag-grid-vue style="width: 100%; height: 100%;"
                    id="myGrid"
