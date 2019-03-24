@@ -81,7 +81,21 @@
 
       <v-flex xs6 order-lg2>
         <v-layout justify-center>
-          <RotatingPieChart v-if="isPie" :data="data"></RotatingPieChart>
+
+          <wordcloud
+            :data="defaultWords"
+            nameKey="name"
+            v-if="isPie"
+            valueKey="value"
+            :color="myColors"
+            :showTooltip="true"
+            :wordClick="wordClickHandler">
+          </wordcloud>
+
+          <!--<vue-word-cloud-->
+            <!--:words="[['romance', 19], ['horror', 3], ['fantasy', 7], ['adventure', 3]]"-->
+          <!--/>-->
+
         </v-layout>
       </v-flex>
 
@@ -97,6 +111,10 @@
 
   import RotatingPieChart from "vue-d3-rotating-piechart";
 
+  import VueWordCloud from 'vuewordcloud';
+
+  import wordcloud from 'vue-wordcloud'
+
   export default {
     name: 'Domain',
     data: () => ({
@@ -109,6 +127,44 @@
       defaultColDef: null,
       data: [],
       isPie: false,
+      defaultWords: [{
+        "name": "Cat",
+        "value": 26
+      },
+        {
+          "name": "fish",
+          "value": 19
+        },
+        {
+          "name": "things",
+          "value": 18
+        },
+        {
+          "name": "look",
+          "value": 16
+        },
+        {
+          "name": "two",
+          "value": 15
+        },
+        {
+          "name": "fun",
+          "value": 9
+        },
+        {
+          "name": "know",
+          "value": 9
+        },
+        {
+          "name": "good",
+          "value": 9
+        },
+        {
+          "name": "play",
+          "value": 6
+        }
+      ],
+      myColors: ['#1f77b4', '#629fc9', '#94bedb', '#c9e0ef'],
       chartData: [
         ['Year', 'Sales', 'Expenses', 'Profit'],
         ['2014', 1000, 400, 200],
@@ -130,7 +186,9 @@
     }),
     components: {
       AgGridVue,
-      RotatingPieChart
+      RotatingPieChart,
+      wordcloud,
+      VueWordCloud
     },
     created() {
     },
@@ -204,7 +262,7 @@
         return Math.floor(number).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
       },
       fillData() {
-        this.rowData = this.$store.state.rowData
+        this.rowData = this.$store.getters.ROW_DATA
         console.log(this.state)
         this.data = [
           {label: 'ex01', value: this.rowData[0].a},
@@ -232,6 +290,9 @@
       },
       fileChanged(file) {
         this.file = file;
+      },
+      wordClickHandler(name, value, vm) {
+        console.log('wordClickHandler', name, value, vm);
       }
     }
   }

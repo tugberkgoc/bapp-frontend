@@ -24,8 +24,10 @@
     "vue-meta": "^1.5.2",
     "vue-property-decorator": "^8.0.0",
     "vue-router": "^3.0.1",
+    "vue-wordcloud": "^1.1.1",
     "vue-xls-csv-parser": "0.0.21",
     "vuetify": "^1.5.5",
+    "vuewordcloud": "^18.7.11",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
