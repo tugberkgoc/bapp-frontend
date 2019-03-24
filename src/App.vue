@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <core-filter />
+    <!--<core-filter />-->
 
     <core-toolbar />
 
@@ -13,8 +13,6 @@
 <style lang="scss">
 @import "../node_modules/ag-grid-community/dist/styles/ag-grid.css";
 @import "../node_modules/ag-grid-community/dist/styles/ag-theme-balham.css";
-@import '../node_modules/vue-material/dist/vue-material.min.css';
-@import '../node_modules/vue-material/dist/theme/default.css';
 @import './styles/index';
 
 /* Remove in 1.2 */
