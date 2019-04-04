@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container style="background-color: white; padding-top: 50px;">
 
     <v-layout row>
 
@@ -9,7 +9,7 @@
 
           <v-card tile flat>
 
-            <v-layout>
+            <v-layout style="">
 
               <material-upload-button icon style="transform: scale(3);  padding-left: 150px;"
                                       :fileChangedCallback="fileChanged">
@@ -51,7 +51,7 @@
         <v-card flat style="border: #000000;">
 
           <div
-            style="height: 100%; padding-top: 40px; box-sizing: border-box; background: #ffffff; padding-left: 40px;">
+            style="height: 100%; padding-top: 40px; box-sizing: border-box; background: white; padding-left: 40px; border: 3px solid red;">
             <ag-grid-vue style="width: 100%; height: 100%;"
                          id="myGrid"
                          class="ag-theme-material"
@@ -76,13 +76,19 @@
     <v-layout row>
 
       <v-flex xs6>
-          <material-g-chart type="ColumnChart" :data="chartData" :options="chartOptions"/>
+          <material-g-chart style="
+                  top: %50;
+                  bottom: %50;
+                  right: %50;
+                  left: %50;
+                  width: 1000px;
+                  height: 500px;" type="ColumnChart" :data="chartData" :options="chartOptions"/>
       </v-flex>
 
       <v-flex xs6 order-lg2>
         <v-layout justify-center>
 
-          <wordcloud
+          <!-- <wordcloud
             :data="defaultWords"
             nameKey="name"
             v-if="isPie"
@@ -90,11 +96,21 @@
             :color="myColors"
             :showTooltip="true"
             :wordClick="wordClickHandler">
-          </wordcloud>
+          </wordcloud> -->
 
-          <!--<vue-word-cloud-->
-            <!--:words="[['romance', 19], ['horror', 3], ['fantasy', 7], ['adventure', 3]]"-->
-          <!--/>-->
+          <vue-word-cloud
+            style="position:absolute; 
+                  top: %50;
+                  bottom: %50;
+                  right: %50;
+                  left: %50;
+                  width: 500px;
+                  height: 500px;
+                  "
+            :words="[['romance', 19], ['horror', 3], ['fantasy', 7], ['adventure', 3]]"
+            :color="([, weight]) => weight > 10 ? 'DeepPink' : weight > 5 ? 'RoyalBlue' : 'Indigo'"
+            font-family="Roboto">
+          </vue-word-cloud>
 
         </v-layout>
       </v-flex>
@@ -105,7 +121,7 @@
 </template>
 
 <script>
-  import {AgGridVue} from "ag-grid-vue";
+  import { AgGridVue} from "ag-grid-vue";
 
   import axios from '../plugins/axios';
 
@@ -222,7 +238,7 @@
         },
         {
           headerName: "Number",
-          field: "3",
+          field: "e",
           editable: true,
           valueParser: this.numberValueParser
         },
@@ -242,10 +258,12 @@
       };
       this.rowData = '' //this.createRowData();
       this.defaultColDef = {sortable: true};
+      
     },
     mounted() {
       this.gridApi = this.gridOptions.api;
       this.gridColumnApi = this.gridOptions.columnApi;
+      this.gridOptions.rowStyle = {};
     },
     computed: {
       isDisabled() {

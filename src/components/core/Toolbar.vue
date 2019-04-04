@@ -1,9 +1,10 @@
 <template>
   <div
     class="homemade-toolbar"
+    style="background-color: white; border-bottom: 3px solid black;"
   >
     <!-- QUENTEDA UI -->
-    <v-btn disabled flat prominent style="background: #eee; width: 150px;">
+    <v-btn disabled flat prominent style="background: white; width: 150px;">
       <v-avatar>
         <v-label>{{toolbarItems[0].item}}</v-label>
       </v-avatar>
@@ -67,7 +68,7 @@
     </v-menu>
 
     <!-- BLOG -->
-    <v-btn flat prominent style="background: #eee; width: 100px;">
+    <v-btn flat prominent style="background: white; width: 100px;">
       <router-link
         class="toolbar-items"
         to="/blog"
@@ -79,7 +80,7 @@
     </v-btn>
 
     <!-- CONTACT -->
-    <v-btn flat prominent style="background: #eee;">
+    <v-btn flat prominent style="background: white;">
       <router-link
         class="toolbar-items"
         to="/contact"
