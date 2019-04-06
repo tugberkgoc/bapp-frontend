@@ -5,12 +5,7 @@
  */
 export default [
   {
-    path: '/Home',
-    name: 'Home',
-    view: 'Home'
-  },
-  {
     path: '/',
     view: 'Home'
-  },
+  }, // name
 ]

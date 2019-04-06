@@ -61,10 +61,13 @@
 
 
           <div class="col-12 col-sm-6 col-md-6 vue-ag-grid"
-               style="height: 100%; padding-top: 40px; box-sizing: border-box; background: white; padding-left: 40px;">
+               style="height: 100%; width: 100%; padding-top: 40px; padding-left: 40px;">
 
             <div class="ag-grid-div">
-              <ag-grid-vue style="height: 50vh; width: 50vw;"
+              <!--<div class="d-flex justify-content-center mb-3 m-5">-->
+              <!--<b-spinner label="Loading..."></b-spinner>-->
+              <!--</div>-->
+              <ag-grid-vue style="height: 45vh; width: 50vw; padding-right: 100px;"
                            id="myGrid"
                            class="ag-theme-material"
                            :gridOptions="gridOptions"
@@ -94,10 +97,15 @@
           </div>
 
           <div class="col-12 col-sm-6 col-md-6 word-cloud">
-
-            <vue-word-cloud style="position:center;" :words="words" v-if="isPie" animation-overlap="0"
-                            animation-easing="ease"
-                            spacing="0.01">
+            <vue-word-cloud
+              style="position:center;"
+              :words="words"
+              v-if="isPie"
+              :animation-overlap=0
+              animation-easing="ease"
+              :spacing=0.5
+              :create-canvas="createCanvas"
+            >
               <template slot-scope="{text, weight, word}">
                 <div v-b-tooltip.hover :title="text + '\n' + weight" style="cursor: pointer;"
                      @click="onWordClick(word)">
@@ -105,13 +113,10 @@
                 </div>
               </template>
             </vue-word-cloud>
-
           </div>
 
         </div>
-
       </div>
-
     </div>
 
     <div id="about" class="container-fluid">
@@ -184,71 +189,84 @@
         {
           headerName: "No",
           field: "a",
-          editable: true,
-          unSortIcon: true
+          width: 200,
         },
         {
           headerName: "Newspaper Name",
           field: "b",
+          width: 400,
           editable: true,
         },
         {
           headerName: "Lorem",
           field: "c",
+          valueParser: this.numberValueParser,
           editable: true,
-          valueParser: this.numberValueParser
         },
         {
           headerName: "Lorem",
           field: "d",
-          editable: true,
           valueParser: this.numberValueParser
         },
         {
           headerName: "Lorem",
           field: "e",
-          editable: true,
           valueParser: this.numberValueParser
         },
         {
           headerName: "Lorem",
           field: "f",
-          editable: true,
           valueParser: this.numberValueParser
         },
         {
           headerName: "Lorem",
           field: "g",
-          editable: true,
-          valueParser: this.numberValueParser
+          valueParser: this.numberValueParser,
+          hide: true
         },
         {
           headerName: "Lorem",
           field: "h",
-          editable: true,
-          valueParser: this.numberValueParser
+          valueParser: this.numberValueParser,
+          hide: true
         },
         {
           headerName: "Lorem",
           field: "j",
-          editable: true,
-          valueParser: this.numberValueParser
+          valueParser: this.numberValueParser,
+          hide: true
         },
       ];
+
       this.defaultColDef = {
-        valueFormatter: params => {
-          return this.formatNumber(params.value);
-        },
-        cellClass: "align-right",
-        resizable: true
-      };
+        resizable: true,
+        filter: true,
+        sortable: true
+      }
       this.rowData = '' //this.createRowData();
-      this.defaultColDef = {sortable: true};
 
+      this.gridOptions.getRowStyle = function (params) {
+        if (params.node.rowIndex % 2 === 0) {
+          return {background: '#b3cbff'}
+        } else {
+          return {background: '#e6eeff'}
+        }
+      }
 
-      let enterAnimation = {opacity: 0};
-      let leaveAnimation = {opacity: 0};
-      this.createCanvas();
+      const gridSize = 8;
+      const rowHeight = gridSize * 6;
+      const headerHeight = gridSize * 6;
+
+      this.gridOptions = {
+        columnDefs: this.columnDefs,
+        rowData: this.rowData,
+        rowSelection: 'multiple',
+
+        headerHeight: headerHeight,
+        floatingFiltersHeight: headerHeight,
+        rowHeight: rowHeight
+      }
+
     },
     mounted() {
       this.gridApi = this.gridOptions.api;
@@ -259,11 +277,11 @@
       },
     },
     methods: {
+      createCanvas() {
+        return document.createElement('canvas')
+      },
       randomColor() {
         return rgb(Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255)).toString()
-      },
-      createCanvas() {
-        return document.createElement('canvas');
       },
       onGridReady(params) {
         params.api.sizeColumnsToFit();
@@ -409,4 +427,12 @@
     position: center;
   }
 
+  .ag-pivot-off .ag-header-cell-label {
+    color: #1b6d85;
+  }
+
+  .ag-pivot-on .ag-header-cell-label {
+    color: #1b6d85;
+    font-weight: bold;
+  }
 </style>

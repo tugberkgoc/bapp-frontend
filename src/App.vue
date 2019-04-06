@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <div>
     <!--<core-filter />-->
 
     <core-toolbar />
@@ -7,12 +7,11 @@
     <!--<core-drawer />-->
 
     <core-view />
-  </v-app>
+  </div>
 </template>
 
 <style lang="scss">
 @import "../node_modules/ag-grid-community/dist/styles/ag-grid.css";
-@import "../node_modules/ag-grid-community/dist/styles/ag-theme-balham.css";
 @import './styles/index';
 
 /* Remove in 1.2 */

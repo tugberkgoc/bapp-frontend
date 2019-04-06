@@ -70,7 +70,9 @@
       "plugin:vue/essential",
       "@vue/airbnb"
     ],
-    "rules": {},
+    "rules": {
+      "comma-dangle": "off"
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }

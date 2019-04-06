@@ -1,12 +1,12 @@
 <template>
-  <v-content style="background-color: white;">
+  <div style="background-color: white;">
     <div>
-      <v-fade-transition mode="out-in">
+      <div>
         <router-view />
-      </v-fade-transition>
+      </div>
     </div>
     <!--<core-footer v-if="$route.name !== 'Maps'" />-->
-  </v-content>
+  </div>
 </template>
 
 <script>

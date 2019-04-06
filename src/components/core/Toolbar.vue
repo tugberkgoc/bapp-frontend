@@ -1,13 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-sm fixed-top nav-back">
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-toggle="collapse"
-      data-target="#collapsibleNavbar"
-    >
-      <i class="fas fa-align-justify"></i>
-    </button>
+  <nav class="navbar navbar-expand-sm toggleable fixed-top nav-back">
 
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
 
