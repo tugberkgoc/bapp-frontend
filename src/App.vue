@@ -1,12 +1,8 @@
 <template>
   <div>
-    <!--<core-filter />-->
+    <core-toolbar></core-toolbar>
 
-    <core-toolbar />
-
-    <!--<core-drawer />-->
-
-    <core-view />
+    <core-view></core-view>
   </div>
 </template>
 

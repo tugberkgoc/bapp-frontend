@@ -5,7 +5,7 @@
         <router-view />
       </div>
     </div>
-    <!--<core-footer v-if="$route.name !== 'Maps'" />-->
+    <core-footer v-if="$route.name !== 'Maps'" />
   </div>
 </template>
 

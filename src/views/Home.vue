@@ -11,8 +11,15 @@
             <p class="intro-text text-center">Lorem ipsum dolor sit amet</p>
             <b-form-group>
               <div class="d-flex justify-content-center">
-                <b-form-file v-model="file" ref="fileinput" class="mb-2 my-file-input"
-                             :fileChangedCallback="fileChanged"></b-form-file>
+                <b-form-file
+                  class="mb-2 my-file-input"
+                  v-model="file"
+                  multiple="multiple"
+                  ref="fileinput"
+                  :fileChangedCallback="fileChanged"
+                >
+                </b-form-file>
+                <!--<span v-for="f in file">{{ f.name }}</span>-->
               </div>
               <div class="d-flex justify-content-center">
                 <b-form-radio-group v-model="selected" :options="radioOptions" name="radioInline"></b-form-radio-group>
@@ -119,27 +126,6 @@
       </div>
     </div>
 
-    <div id="about" class="container-fluid">
-      <div class="row">
-        <div class="col-sm-12 col-md-4 col-lg-4 text-center">
-          <img class="about-img">
-        </div>
-        <div class="col-sm-12 col-md-8 col-lg-8">
-          <h1>GENERAL INFORMATION</h1>
-          <p>
-            Welcome to QuantedaUI. Created by Ahmet Süerdem, Fuat Can Beylunioğlu and Oğulcan Gök. This application will
-            help you to analyze your text data by creating various plots. IN order to use you should arrange your data
-            in a CSV file. Your text column name should be “Text” and date format must be DD/MM/YYYY.
-            You can initilaze the app by uploading your CSV to the slot located in Corpus Creation tab. After the
-            calculations the app will create a .rda file to your working directory which you can upload to continue to
-            your work anytime you want. It will hold all the changes you make to your csv file.
-            If you want to save your progress any moment, you can just simply click the save button.
-            Let's see the basics..
-          </p>
-
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -245,14 +231,6 @@
       }
       this.rowData = '' //this.createRowData();
 
-      this.gridOptions.getRowStyle = function (params) {
-        if (params.node.rowIndex % 2 === 0) {
-          return {background: '#b3cbff'}
-        } else {
-          return {background: '#e6eeff'}
-        }
-      }
-
       const gridSize = 8;
       const rowHeight = gridSize * 6;
       const headerHeight = gridSize * 6;
@@ -267,6 +245,14 @@
         rowHeight: rowHeight
       }
 
+      this.gridOptions.getRowStyle = function (params) {
+        if (params.node.rowIndex % 2 === 0) {
+          return {background: '#b3cbff'}
+        } else {
+          return {background: '#e6eeff'}
+        }
+      }
+
     },
     mounted() {
       this.gridApi = this.gridOptions.api;
@@ -277,6 +263,10 @@
       },
     },
     methods: {
+      onWordClick(word) {
+        let element = this.$refs.modal.$el
+        $(element).modal('show')
+      },
       createCanvas() {
         return document.createElement('canvas')
       },
@@ -369,34 +359,6 @@
   .barchart {
     margin-left: -35px;
     margin-top: -70px;
-  }
-
-  #about {
-    background: rgba(201, 127, 127, 0.5);
-    color: white;
-    padding-bottom: 50px;
-  }
-
-  #about h1 {
-    font-size: 30px;
-    padding-top: 35px;
-    padding-bottom: 10px;
-    padding-left: 110px;
-    font-weight: 300;
-  }
-
-  #about p {
-    padding-left: 30px;
-  }
-
-  .about-img {
-    position: relative;
-    width: 340px;
-    height: 300px;
-    padding-top: 100px;
-    padding-left: 25px;
-    max-width: 100%;
-    height: auto;
   }
 
   .my-bar-chart {

@@ -8,4 +8,12 @@ export default [
     path: '/',
     view: 'Home'
   }, // name
+  {
+    path: '/blog',
+    view: 'Blog'
+  },
+  {
+    path: '/map',
+    view: 'Maps'
+  },
 ]
