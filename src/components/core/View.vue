@@ -1,26 +1,23 @@
 <template>
-  <v-content>
-    <div id="core-view">
-      <v-fade-transition mode="out-in">
+  <div style="background-color: white;">
+    <div>
+      <div>
         <router-view />
-      </v-fade-transition>
+      </div>
     </div>
     <core-footer v-if="$route.name !== 'Maps'" />
-  </v-content>
+  </div>
 </template>
 
 <script>
 export default {
   metaInfo () {
     return {
-      title: 'Vuetify Material Dashboard by CreativeTim'
+      title: ''
     }
   }
 }
 </script>
 
 <style>
-#core-view {
-  padding-bottom: 100px;
-}
 </style>

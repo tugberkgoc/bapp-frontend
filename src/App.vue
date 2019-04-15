@@ -1,18 +1,13 @@
 <template>
-  <v-app>
-    <!--<core-filter />-->
+  <div>
+    <core-toolbar></core-toolbar>
 
-    <core-toolbar />
-
-    <!--<core-drawer />-->
-
-    <core-view />
-  </v-app>
+    <core-view></core-view>
+  </div>
 </template>
 
 <style lang="scss">
 @import "../node_modules/ag-grid-community/dist/styles/ag-grid.css";
-@import "../node_modules/ag-grid-community/dist/styles/ag-theme-balham.css";
 @import './styles/index';
 
 /* Remove in 1.2 */

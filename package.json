@@ -6,13 +6,17 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit",
+    "now-build": "vue-cli-service build"
   },
   "dependencies": {
-    "ag-grid-community": "^20.1.0",
-    "ag-grid-vue": "^20.1.0",
+    "ag-grid-community": "20.1.0",
+    "ag-grid-vue": "20.1.0",
+    "bootstrap": "^4.3.1",
+    "bootstrap-vue": "^2.0.0-rc.16",
     "chartist": "0.11.0",
     "debounce": "^1.2.0",
+    "jquery": "^3.3.1",
     "material-design-icons-iconfont": "^3.0.3",
     "node-sass": "^4.9.3",
     "roboto-fontface": "*",
@@ -66,7 +70,9 @@
       "plugin:vue/essential",
       "@vue/airbnb"
     ],
-    "rules": {},
+    "rules": {
+      "comma-dangle": "off"
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }

@@ -17,14 +17,17 @@ import i18n from './i18n'
 import router from './router'
 import store from './store'
 
-// Vue Material
-import VueMaterial from 'vue-material'
+import 'bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import BootstrapVue from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+Vue.use(BootstrapVue)
 
 // Sync store with router
 sync(store, router)
 
 Vue.config.productionTip = false
-Vue.use(VueMaterial)
 
 /* eslint-disable no-new */
 new Vue({
