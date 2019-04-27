@@ -28,6 +28,8 @@
     "vue-meta": "^1.5.2",
     "vue-property-decorator": "^8.0.0",
     "vue-router": "^3.0.1",
+    "vue-stepper": "^1.4.2",
+    "vue-stepper-component": "^1.0.0",
     "vue-wordcloud": "^1.1.1",
     "vue-xls-csv-parser": "0.0.21",
     "vuetify": "^1.5.5",

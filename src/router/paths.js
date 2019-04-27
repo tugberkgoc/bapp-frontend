@@ -9,6 +9,10 @@ export default [
     view: 'Home'
   }, // name
   {
+    path: '/corpus-operations',
+    view: 'CorpusOperations'
+  },
+  {
     path: '/blog',
     view: 'Blog'
   },

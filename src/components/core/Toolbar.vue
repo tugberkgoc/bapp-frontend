@@ -1,138 +1,63 @@
 <template>
-  <nav class="navbar navbar-expand-sm toggleable fixed-top nav-back">
+  <div class="toolbar">
+    <b-navbar toggleable="lg" type="dark" variant="info">
+      <b-navbar-brand class="brand" v-on:click="goToHomePage">Quenteda UI</b-navbar-brand>
 
-    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-      <!-- QUENTEDA UI -->
-      <div class="my-nav-brand">
-        <a>{{toolbarItems[0].item}}</a>
-      </div>
-      <ul class="navbar-nav">
+      <b-collapse id="nav-collapse" is-nav>
+        <b-navbar-nav>
+          <b-nav-item>
+            <router-link tag="li" to="/corpus-operations">Corpus Operations</router-link>
+          </b-nav-item>
+        </b-navbar-nav>
 
-        <!-- CORPUS OPERATIONS -->
-        <li class="nav-item dropdown">
-          <a class="nav-link" href="#" data-toggle="dropdown">{{toolbarItems[1].item}}</a>
-          <div class="dropdown-menu">
-            <div
-              v-for="item in toolbarItems[1].items"
-              :key="item"
-              @click="onClick"
-            >
-              <a class="dropdown-item" :href="item.to" v-text="item.name"></a>
-            </div>
-          </div>
-        </li>
+        <!-- Right aligned nav items -->
+        <b-navbar-nav class="ml-auto">
 
-        <!-- SPACY OPERATIONS -->
-        <li class="nav-item dropdown">
-          <a class="nav-link" href="#" data-toggle="dropdown">{{toolbarItems[2].item}}</a>
-          <div class="dropdown-menu">
-            <div
-              v-for="item in toolbarItems[2].items"
-              :key="item"
-              @click="onClick"
-            >
-              <a class="dropdown-item" :href="item.to" v-text="item.name"></a>
-            </div>
-          </div>
-        </li>
-
-        <!-- BLOG -->
-        <li class="nav-item">
-          <a class="nav-link" href="#">{{toolbarItems[3].item}}</a>
-        </li>
-
-        <!-- CONTACT -->
-        <li class="nav-item">
-          <a class="nav-link" href="/contact">{{toolbarItems[4].item}}</a>
-        </li>
-
-      </ul>
-    </div>
-  </nav>
+          <b-nav-item-dropdown right>
+            <!-- Using 'button-content' slot -->
+            <template slot="button-content">
+              <em>Login / Sign Up</em>
+              <!--<em v-if="NAME !== ''"> Log Out</em>-->
+            </template>
+            <b-dropdown-item v-if="NAME !== ''" v-on:click="logOut">Log Out</b-dropdown-item>
+            <b-dropdown-item v-if="NAME === ''" to="/login">Login</b-dropdown-item>
+            <b-dropdown-item v-if="NAME === ''" to="/register">Sign Up</b-dropdown-item>
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
+  </div>
 </template>
 
 <script>
+  import {mapState, mapMutations} from 'vuex';
+
   export default {
-    data: () => ({
-      toolbarItems: [
-        {item: 'Quenteda UI', to: '/'},
-        {
-          item: 'CORPUS OPERATIONS', to: '/corpus-operations',
-          items: [
-            {name: 'Corpus Creation', to: '/'},
-            {name: 'Corpus Summary', to: '/'},
-            {name: 'Explore Your Corpus', to: '/'},
-            {name: 'Corpus Plots', to: '/'}
-          ]
-        },
-        {
-          item: 'SPACY OPERATIONS', to: '/spacy-operations',
-          items: [
-            {name: 'Spacy Initialize', to: '/'},
-            {name: 'Discover CSV', to: '/'},
-            {name: 'CSV Plots', to: '/'}
-          ]
-        },
-        {item: 'BLOG', to: '/blog'},
-        {item: 'Contact', to: '/contact'}
-      ]
-    }),
-    watch: {
-      '$route'(val) {
-        this.title = val.name
-      }
+    data() {
+      return {}
     },
-    mounted() {
-    },
-    beforeDestroy() {
-    },
+    computed:
+      mapState(['NAME']),
     methods: {
-      onClick() {
-        //
+      logOut() {
+        this.$store.dispatch("SET_EMPTY_STORE", '');
+        this.$router.push({path: '/'})
       },
+      goToHomePage() {
+        this.$router.push({path: '/'})
+      }
     }
-  }
+  };
 </script>
 
 <style>
-  .nav-back {
-    background-color: rgba(201, 127, 127, 0.5);
+  .toolbar {
+
   }
 
-  .navbar-nav {
-    padding-left: 30px;
-  }
-
-  .nav-item {
-    padding-left: 15px;
-  }
-
-  .navbar-nav a {
-    color: rgb(255, 248, 248);
-    font-size: 20px;
-    font-weight: 700;
-  }
-
-  .navbar-nav a:hover {
-    color: rgb(112, 112, 112);
-  }
-
-  .dropdown-menu a {
-    color: rgba(201, 127, 127, 0.85);
-    font-size: 20px;
-    font-weight: 700;
-  }
-
-  .dropdown-menu a:hover {
-    color: rgb(255, 255, 255);
-    background-color: rgb(206, 94, 94);
-  }
-
-  .my-nav-brand {
-    color: rgb(255, 255, 255);
-    font-size: 20px;
-    font-weight: 100;
-    padding-left: 20px;
+  .brand:hover {
+    color: black;
   }
 </style>
