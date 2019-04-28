@@ -41,7 +41,6 @@
     <!--<d3-network :net-nodes="nodes" nodeLabels="false" :net-links="links" :options="options">-->
     <!--</d3-network>-->
 
-
   </v-app>
 </template>
 
