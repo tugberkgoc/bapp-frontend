@@ -45,20 +45,14 @@
           </v-stepper-content>
 
           <v-stepper-content step="3">
-            <v-card
-                class="mb-5"
-                color="grey lighten-1"
-                height="200px"
-            ></v-card>
+
+            <Step3/>
 
           </v-stepper-content>
 
           <v-stepper-content step="4">
-            <v-card
-                class="mb-5"
-                color="grey lighten-1"
-                height="200px"
-            ></v-card>
+
+            <Step4/>
 
           </v-stepper-content>
         </v-stepper-items>
@@ -98,24 +92,27 @@
 <script>
   import Step1 from '../components/Step1'
   import Step2 from '../components/Step2'
+  import Step3 from '../components/Step3'
+  import Step4 from '../components/Step4'
 
   import {mapState} from 'vuex'
 
   export default {
     components: {
       Step1,
-      Step2
+      Step2,
+      Step3,
+      Step4
     },
     data() {
-      return {
-      }
+      return {}
     },
     computed: mapState(['E1']),
     methods: {
       increaseStep() {
-        if(this.$store.getters.E1 !== '4') {
+        if (this.$store.getters.E1 !== '4') {
           this.$store.dispatch("SET_E1")
-          if(this.$store.getters.E1 === '2') {
+          if (this.$store.getters.E1 === '2' || this.$store.getters.E1 === '3') {
             window.location.reload()
           }
         }
