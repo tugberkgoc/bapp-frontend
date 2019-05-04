@@ -18,7 +18,7 @@
   export default {
     data: () => ({
       dropOptions: {
-        url: "https://httpbin.org/post",
+        url: "http://localhost:8000/api/json/",
         maxFilesize: 2, // MB
         maxFiles: 4,
         chunking: true,
