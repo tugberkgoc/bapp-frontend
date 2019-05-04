@@ -8,12 +8,25 @@
     </vue-dropzone>
 
     <v-btn style="margin-top: 50px;" @click="removeAllFiles">Remove All Files</v-btn>
+
+
+      Select image to upload:
+
+
+    <input ref="file" type="file">
+
+
+    <input value="Upload" name="submit" v-on:click="sendRequest">
+
+
   </div>
 </template>
 
 <script>
   import vueDropzone from "vue2-dropzone";
   import 'vue2-dropzone/dist/vue2Dropzone.min.css'
+
+  import axios from 'axios'
 
   export default {
     data: () => ({
@@ -23,7 +36,8 @@
         maxFiles: 4,
         chunking: true,
         chunkSize: 500, // Bytes
-        addRemoveLinks: true
+        addRemoveLinks: true,
+        method: 'POST'
       }
     }),
     components: {
@@ -35,6 +49,13 @@
       },
       afterComplete(file) {
         console.log(file);
+      },
+      sendRequest() {
+        axios.post("http://localhost:8000/api/json/", "this.$refs.file", {
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        }).then(x => console.log(x))
       }
     }
   };

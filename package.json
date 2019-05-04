@@ -8,6 +8,7 @@
     "now-build": "vue-cli-service build"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "core-js": "^2.6.5",
     "d3-vs": "^0.8.0",
     "vue": "^2.6.10",
