@@ -13,7 +13,7 @@
       Select image to upload:
 
 
-    <input ref="file" type="file">
+    <input ref="file" id="file" type="file" v-on:change="handleFileUpload">
 
 
     <input value="Upload" name="submit" v-on:click="sendRequest">
@@ -31,14 +31,15 @@
   export default {
     data: () => ({
       dropOptions: {
-        url: "http://localhost:8000/api/json/",
-        maxFilesize: 2, // MB
+        url: "http://localhost:8000/api/upload/",
+        maxFilesize: 5, // MB
         maxFiles: 4,
         chunking: true,
         chunkSize: 500, // Bytes
         addRemoveLinks: true,
         method: 'POST'
-      }
+      },
+      file: ''
     }),
     components: {
       vueDropzone
@@ -51,11 +52,17 @@
         console.log(file);
       },
       sendRequest() {
-        let js = {
-          "content": { 0: "selamkral"}
-        }
+        let formData = new FormData()
 
-        axios.post("http://localhost:8000/api/json/", js).then(x => console.log(x))
+        formData.append('file', this.file)
+        formData.append('remark', "Hello World")
+
+        axios.post("http://localhost:8000/api/upload/", formData,{
+          headers: {'content-type':'multipart/form-data'}
+        }).then(x => console.log(x))
+      },
+      handleFileUpload(){
+        this.file = this.$refs.file.files[0];
       }
     }
   };
