@@ -51,11 +51,11 @@
         console.log(file);
       },
       sendRequest() {
-        axios.post("http://localhost:8000/api/json/", "this.$refs.file", {
-          headers: {
-            'Content-Type': 'application/json',
-          }
-        }).then(x => console.log(x))
+        let js = {
+          "content": { 0: "selamkral"}
+        }
+
+        axios.post("http://localhost:8000/api/json/", js).then(x => console.log(x))
       }
     }
   };
