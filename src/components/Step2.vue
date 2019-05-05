@@ -12,7 +12,7 @@
           :data="JSON_FILE"
           :options="options"
           width="100%"
-          height="300px"> <!-- :margin="margin" -->
+          height="700px"> <!-- :margin="margin" -->
       </d3-vertical-bar>
 
     </div>
