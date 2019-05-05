@@ -3,23 +3,23 @@
 
     <v-layout column>
 
-      <v-stepper fixed v-model="e1">
+      <v-stepper fixed :value="E1">
 
         <v-stepper-header>
 
-          <v-stepper-step editable :complete="e1 > 1" step="1">Upload Files</v-stepper-step>
+          <v-stepper-step :complete="E1 > 1" step="1">Upload Files</v-stepper-step> <!-- editable -->
 
           <v-divider></v-divider>
 
-          <v-stepper-step editable :complete="e1 > 2" step="2">First Cleaning</v-stepper-step>
+          <v-stepper-step :complete="E1 > 2" step="2">First Cleaning</v-stepper-step>
 
           <v-divider></v-divider>
 
-          <v-stepper-step editable :complete="e1 > 3" step="3">Second Cleaning</v-stepper-step>
+          <v-stepper-step :complete="E1 > 3" step="3">Second Cleaning</v-stepper-step>
 
           <v-divider></v-divider>
 
-          <v-stepper-step editable :complete="e1 > 4" step="4">Third Cleaning</v-stepper-step>
+          <v-stepper-step :complete="E1 > 4" step="4">Third Cleaning</v-stepper-step>
 
         </v-stepper-header>
 
@@ -36,7 +36,6 @@
 
             <Step1/>
 
-
           </v-stepper-content>
 
           <v-stepper-content step="2">
@@ -46,20 +45,14 @@
           </v-stepper-content>
 
           <v-stepper-content step="3">
-            <v-card
-                class="mb-5"
-                color="grey lighten-1"
-                height="200px"
-            ></v-card>
+
+            <Step3/>
 
           </v-stepper-content>
 
           <v-stepper-content step="4">
-            <v-card
-                class="mb-5"
-                color="grey lighten-1"
-                height="200px"
-            ></v-card>
+
+            <Step4/>
 
           </v-stepper-content>
         </v-stepper-items>
@@ -73,7 +66,12 @@
     <v-layout class="footer">
       <div class="submit">
 
-        <v-btn class="cancel" color="primary">Cancel</v-btn>
+        <v-btn
+            class="cancel"
+            v-on:click="cancel"
+            color="primary">
+          Cancel
+        </v-btn>
 
         <v-divider></v-divider>
 
@@ -81,7 +79,7 @@
             class="continue"
             color="primary"
             @click="increaseStep"
-        >
+            :disabled="E1 === '4'">
           Continue
         </v-btn>
 
@@ -94,26 +92,40 @@
 <script>
   import Step1 from '../components/Step1'
   import Step2 from '../components/Step2'
+  import Step3 from '../components/Step3'
+  import Step4 from '../components/Step4'
+
+  import {mapState} from 'vuex'
 
   export default {
     components: {
       Step1,
-      Step2
+      Step2,
+      Step3,
+      Step4
     },
     data() {
-      return {
-        e1: 0
-      }
+      return {}
     },
+    computed: mapState(['E1']),
     methods: {
       increaseStep() {
-        this.e1 = (parseInt(this.e1) + 1).toString()
+        if (this.$store.getters.E1 !== '4') {
+          this.$store.dispatch("SET_E1")
+          if (this.$store.getters.E1 === '2' || this.$store.getters.E1 === '3') {
+            window.location.reload()
+          }
+        }
+      },
+      cancel() {
+        this.$store.dispatch("SET_E1_ZERO")
       }
     }
   }
 </script>
 
 <style lang="stylus" scoped>
+
   .v-progress-circular
     margin: 1rem
 
