@@ -1,17 +1,22 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
+import axios from 'axios'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     E1: 1,
+    JSON_FILE: []
   },
   plugins: [createPersistedState()],
   getters: {
     E1: state => {
       return state.E1
+    },
+    JSON_FILE: state => {
+      return state.JSON_FILE
     }
   },
   mutations: {
@@ -20,6 +25,9 @@ export default new Vuex.Store({
     },
     SET_E1_ZERO: (state) => {
       state.E1 = 1
+    },
+    SET_JSON_FILE: (state, payload) => {
+      state.JSON_FILE = payload
     }
   },
   actions: {
@@ -67,6 +75,9 @@ export default new Vuex.Store({
     },
     SET_E1_ZERO: (context) => {
       context.commit("SET_E1_ZERO")
+    },
+    SET_JSON_FILE: async (context, payload) => {
+      context.commit("SET_JSON_FILE", payload)
     }
   },
 })
