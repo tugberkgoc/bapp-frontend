@@ -8,7 +8,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     E1: 1,
-    JSON_FILE: []
+    JSON_FILE: ''
   },
   plugins: [createPersistedState()],
   getters: {
@@ -25,6 +25,7 @@ export default new Vuex.Store({
     },
     SET_E1_ZERO: (state) => {
       state.E1 = 1
+      state.JSON_FILE = ''
     },
     SET_JSON_FILE: (state, payload) => {
       state.JSON_FILE = payload

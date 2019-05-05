@@ -1,14 +1,30 @@
 <template>
   <div id="app">
-    <vue-dropzone
-        ref="dropzone"
-        id="drop1"
-        :options="dropOptions"
-        @vdropzone-complete="afterComplete"
-        v-on:vdropzone-sending="sendingEvent">
-    </vue-dropzone>
 
-    <v-btn style="margin-top: 50px;" @click="removeAllFiles">Remove All Files</v-btn>
+    <div>
+      <!--<vue-dropzone-->
+      <!--ref="dropzone"-->
+      <!--id="drop1"-->
+      <!--:options="dropOptions"-->
+      <!--@vdropzone-complete="afterComplete"-->
+      <!--v-on:vdropzone-sending="sendingEvent">-->
+      <!--</vue-dropzone>-->
+
+      <vue-dropzone
+          ref="dropzone"
+          id="drop1"
+          :options="dropOptions"
+          @vdropzone-complete="afterComplete"
+          v-on:vdropzone-sending="sendingEvent"
+          :useCustomSlot=true>
+        <div class="dropzone-custom-content">
+          <h3 class="dropzone-custom-title">Drag and drop to upload content!</h3>
+          <div class="subtitle">...or click to select a file from your computer</div>
+        </div>
+      </vue-dropzone>
+    </div>
+
+    <!--<v-btn style="margin-top: 50px;" @click="removeAllFiles">Remove All Files</v-btn>-->
 
   </div>
 </template>
@@ -64,7 +80,7 @@
         //   headers: {'content-type':'multipart/form-data'}
         // }).then(x => console.log(x))
       },
-      handleFileUpload(){
+      handleFileUpload() {
         this.file = this.$refs.file.files[0];
       },
       sendingEvent(file, xhr, formData) {
@@ -81,6 +97,24 @@
 
   #app {
     height: 100vh;
+  }
+
+  .dropzone-custom-content {
+    padding-top: 13vh;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  .dropzone-custom-title {
+    margin-top: 0;
+    color: #00b782;
+  }
+
+  .subtitle {
+    color: #314b5f;
   }
 
 </style>

@@ -4,7 +4,7 @@
     <div class="firstVerticalBar">
 
       <div class="firstHeader">
-        <h3>Word / Length Histogram</h3>
+        <h3>Word / Frequency Histogram</h3>
       </div>
 
       <d3-vertical-bar

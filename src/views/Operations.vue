@@ -79,7 +79,7 @@
             class="continue"
             color="primary"
             @click="increaseStep"
-            :disabled="E1 === '4'">
+            :disabled="JSON_FILE === '' || E1 === '4' || E1 === '3' || E1 === '2'">
           Continue
         </v-btn>
 
@@ -107,7 +107,7 @@
     data() {
       return {}
     },
-    computed: mapState(['E1']),
+    computed: mapState(['E1', 'JSON_FILE']),
     methods: {
       increaseStep() {
         if (this.$store.getters.E1 !== '4') {
@@ -118,7 +118,7 @@
         }
       },
       cancel() {
-        this.$store.dispatch("SET_E1_ZERO")
+        this.$store.dispatch("SET_E1_ZERO").then()
       }
     }
   }
