@@ -8,7 +8,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     E1: 1,
-    JSON_FILE: ''
+    JSON_FILE: '',
+    JSON_TABLE: ''
   },
   plugins: [createPersistedState()],
   getters: {
@@ -17,7 +18,10 @@ export default new Vuex.Store({
     },
     JSON_FILE: state => {
       return state.JSON_FILE
-    }
+    },
+    JSON_TABLE: state => {
+      return state.JSON_FILE
+    },
   },
   mutations: {
     SET_E1: (state) => {
@@ -29,6 +33,9 @@ export default new Vuex.Store({
     },
     SET_JSON_FILE: (state, payload) => {
       state.JSON_FILE = payload
+    },
+    SET_JSON_TABLE: (state, payload) => {
+      state.JSON_TABLE = payload
     }
   },
   actions: {
@@ -79,6 +86,9 @@ export default new Vuex.Store({
     },
     SET_JSON_FILE: async (context, payload) => {
       context.commit("SET_JSON_FILE", payload)
-    }
+    },
+    SET_JSON_TABLE: async (context, payload) => {
+      context.commit("SET_JSON_TABLE", payload)
+    },
   },
 })

@@ -33,22 +33,22 @@
 
     <!--</div>-->
 
-    <!--<div class="firstTable">-->
+    <div class="firstTable">
 
-      <!--<v-data-table-->
-          <!--:headers="headers"-->
-          <!--:items="wordFrequency"-->
-          <!--class="elevation-1"-->
-          <!--style="padding-bottom: 50px"-->
-      <!--&gt;-->
-        <!--<template v-slot:items="props">-->
-          <!--<td>{{ props.item.number }}</td>-->
-          <!--<td class="text-xs-left">{{ props.item.word }}</td>-->
-          <!--<td class="text-xs-left">{{ props.item.frequency }}</td>-->
-        <!--</template>-->
-      <!--</v-data-table>-->
+      <v-data-table
+          :headers="headers"
+          :items="JSON_TABLE"
+          class="elevation-1"
+          style="padding-bottom: 50px"
+      >
+        <template v-slot:items="props">
+          <td>{{ props.item.number }}</td>
+          <td class="text-xs-left">{{ props.item.word }}</td>
+          <td class="text-xs-left">{{ props.item.frequency }}</td>
+        </template>
+      </v-data-table>
 
-    <!--</div>-->
+    </div>
 
     <!--<div class="secondTable">-->
 
@@ -99,68 +99,16 @@
         //   axisXLabel: 'Sentence',
         //   axisYLabel: 'Length'
         // },
-        // headers: [
-        //   {
-        //     text: 'Number',
-        //     align: 'left',
-        //     sortable: false,
-        //     value: 'number'
-        //   },
-        //   { text: 'Word', value: 'word' },
-        //   { text: 'Frequency', value: 'frequency' }
-        // ],
-        // wordFrequency: [
-        //   {
-        //     number: 1,
-        //     word: 'frozen',
-        //     frequency: 159
-        //   },
-        //   {
-        //     number: 2,
-        //     word: 'tugberk',
-        //     frequency: 140
-        //   },
-        //   {
-        //     number: 3,
-        //     word: 'tugce',
-        //     frequency: 169
-        //   },
-        //   {
-        //     number: 4,
-        //     word: 'ali',
-        //     frequency: 120
-        //   },
-        //   {
-        //     number: 5,
-        //     word: 'veli',
-        //     frequency: 172
-        //   },
-        //   {
-        //     number: 6,
-        //     word: 'simge',
-        //     frequency: 164
-        //   },
-        //   {
-        //     number: 7,
-        //     word: 'umut',
-        //     frequency: 135
-        //   },
-        //   {
-        //     number: 8,
-        //     word: 'ekin',
-        //     frequency: 127
-        //   },
-        //   {
-        //     number: 9,
-        //     word: 'murat',
-        //     frequency: 174
-        //   },
-        //   {
-        //     number: 10,
-        //     word: 'dilara',
-        //     frequency: 152
-        //   }
-        // ],
+        headers: [
+          {
+            text: 'Number',
+            align: 'left',
+            sortable: true,
+            value: 'number'
+          },
+          { text: 'Word', value: 'word' },
+          { text: 'Frequency', value: 'frequency' }
+        ],
         // headersBottom: [
         //   {
         //     text: 'Number',
@@ -225,7 +173,7 @@
         // ]
       }
     },
-    computed: mapState(['E1', 'JSON_FILE']),
+    computed: mapState(['E1', 'JSON_FILE', 'JSON_TABLE']),
     methods: {
       convertData() {
 

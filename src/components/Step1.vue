@@ -59,11 +59,16 @@
         console.log(file.status);
 
         let payload = []
+        let table = []
+        let temp = 1
         let array = JSON.parse("[" + file.xhr.response + "]");
         array[0].forEach(x => {
           payload.push({key: x[0], value: parseInt(x[1])})
+          table.push({number: temp, word: x[0], frequency: parseInt(x[1])})
+          temp = temp + 1
         })
 
+        this.$store.dispatch("SET_JSON_TABLE", table).then();
         this.$store.dispatch("SET_JSON_FILE", payload).then();
       },
       sendRequest() {
