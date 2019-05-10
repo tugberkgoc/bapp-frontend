@@ -1,82 +1,73 @@
-<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <v-layout v-if="E1 === '2'" column style="">
-
-    <div class="firstVerticalBar">
-
-      <div class="firstHeader">
-        <h3>Word / Frequency Histogram</h3>
-      </div>
-
-      <d3-vertical-bar
-          style="display: flex;"
-          :data="JSON_FILE"
-          :options="options"
-          width="100%"
-          height="700px"> <!-- :margin="margin" -->
-      </d3-vertical-bar>
-
-    </div>
-
-    <div class="firstTable">
-
-      <v-data-table
-          :headers="headers"
-          :items="JSON_TABLE"
-          class="elevation-1"
-          style="padding-bottom: 50px"
-      >
-        <template v-slot:items="props">
-          <td>{{ props.item.number }}</td>
-          <td class="text-xs-left">{{ props.item.word }}</td>
-          <td class="text-xs-left">{{ props.item.frequency }}</td>
-        </template>
-      </v-data-table>
-
-    </div>
+<template>
+  <v-layout v-if="E1 === '2'" row style="">
 
     <div class="wordCloud">
       <vue-word-cloud :words="WORD_CLOUD">
         <template slot-scope="{text, weight, word}">
-          <div v-b-tooltip.hover :title="weight" style="cursor: pointer;" @click="onWordClick(word)">
+          <div :title="weight" style="cursor: pointer;" @click="onWordClick(word)">
             {{ text }}
           </div>
         </template>
       </vue-word-cloud>
     </div>
 
+    <div class="checkboxes">
+
+      <h1 style="margin-bottom: 20px;">Options</h1>
+
+      <div style="margin-left: 7vw;">
+        <div v-for="c in checkboxes">
+          <v-checkbox
+              v-model="c.value"
+              :label="c.label"
+          ></v-checkbox>
+        </div>
+      </div>
+
+      <v-btn
+          class="continue"
+          color="primary"
+          @click="isActive">
+        Continue
+      </v-btn>
+
+    </div>
+
   </v-layout>
 </template>
 
 <script>
-  import {d3VerticalBar} from 'd3-vs'
   import vueWordCloud from 'vuewordcloud'
-  import {mapState} from 'vuex'
+  import {mapState, mapMutations} from 'vuex'
+
 
   export default {
     components: {
-      d3VerticalBar,
       vueWordCloud
     },
     data: () => {
       return {
-        options: {
-          axisXLabel: 'Word',
-          axisYLabel: 'Frequency'
-        },
-        headers: [
-          {
-            text: 'Number',
-            align: 'left',
-            sortable: true,
-            value: 'number'
-          },
-          { text: 'Word', value: 'word' },
-          { text: 'Frequency', value: 'frequency' }
-        ],
+        checkboxes: [
+          {value: false, label: "Semantic"},
+          {value: false, label: "LoremIpsum"},
+          {value: false, label: "Voluptatibus"},
+          {value: false, label: "Salutandi"},
+          {value: false, label: "Ipsum"}
+        ]
       }
     },
-    computed: mapState(['E1', 'JSON_FILE', 'JSON_TABLE', 'WORD_CLOUD']),
+    computed: mapState(['E1', 'WORD_CLOUD']),
     methods: {
+      ...mapMutations({
+        POP_WORD_CLOUD: 'POP_WORD_CLOUD',
+        SET_READY: 'SET_READY'
+      }),
+      onWordClick(word) {
+        this.POP_WORD_CLOUD(word)
+      },
+      isActive() {
+        this.SET_READY(true)
+      }
     }
   }
 
@@ -84,15 +75,16 @@
 
 <style lang="stylus" scoped>
 
-  .firstHeader {
-    padding-left: 50vw - 5px;
-    padding-bottom 2.5vh;
-    padding-top: 1vw;
+  .wordCloud {
+    width: 80vw;
+    height 80vh;
   }
 
-  .wordCloud {
-    width: 90vw;
-    height 50vh;
+  .checkboxes {
+    margin-top: 15vh;
+    width: 20vw;
+    height 60vh;
+    text-align: center;
   }
 
 </style>

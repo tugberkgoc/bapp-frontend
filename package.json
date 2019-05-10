@@ -12,6 +12,7 @@
     "bootstrap-vue": "^2.0.0-rc.19",
     "core-js": "^2.6.5",
     "d3-vs": "^0.8.0",
+    "debounce": "^1.2.0",
     "vue": "^2.6.10",
     "vue-d3-network": "^0.1.28",
     "vue-router": "^3.0.3",

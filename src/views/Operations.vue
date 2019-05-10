@@ -71,7 +71,7 @@
             class="continue"
             color="primary"
             @click="increaseStep"
-            :disabled="JSON_FILE === '' || E1 === '4' || E1 === '3' || E1 === '2'">
+            :disabled="READY === false">
           Continue
         </v-btn>
 
@@ -87,7 +87,7 @@
   import Step4 from '../components/Step4'
   import UploadTabs from './UploadTabs'
 
-  import {mapState} from 'vuex'
+  import {mapState, mapMutations} from 'vuex'
 
   export default {
     components: {
@@ -99,15 +99,19 @@
     data() {
       return {}
     },
-    computed: mapState(['E1', 'JSON_FILE']),
+    computed: mapState(['E1', 'READY']),
     methods: {
+      ...mapMutations({
+        SET_READY: 'SET_READY'
+      }),
       increaseStep() {
         if (this.$store.getters.E1 !== '4') {
           this.$store.dispatch("SET_E1")
-          if (this.$store.getters.E1 === '2' || this.$store.getters.E1 === '3') {
+          if (this.$store.getters.E1 === '3') {
             window.location.reload()
           }
         }
+        this.SET_READY(false)
       },
       cancel() {
         this.$store.dispatch("SET_E1_ZERO").then()

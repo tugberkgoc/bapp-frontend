@@ -18,6 +18,7 @@
           v-on:vdropzone-sending="sendingEvent"
           :useCustomSlot=true>
         <div class="dropzone-custom-content">
+          <v-icon color="info" :large="true">cloud_upload</v-icon>
           <h3 class="dropzone-custom-title">Drag and drop to upload content!</h3>
           <div class="subtitle">...or click to select a file from your computer</div>
         </div>
@@ -32,11 +33,12 @@
 <script>
   import vueDropzone from "vue2-dropzone";
   import 'vue2-dropzone/dist/vue2Dropzone.min.css'
+  import {mapMutations} from 'vuex'
 
   export default {
     data: () => ({
       dropOptions: {
-        url: "http://localhost:8000/api/upload/",
+        url: "https://corpuslivetest.herokuapp.com/api/upload/",
         maxFilesize: 5, // MB
         maxFiles: 4,
         chunking: false,
@@ -51,6 +53,9 @@
       vueDropzone
     },
     methods: {
+      ...mapMutations({
+        SET_READY: 'SET_READY'
+      }),
       removeAllFiles() {
         this.$refs.dropzone.removeAllFiles();
       },
@@ -82,6 +87,7 @@
         this.$store.dispatch("SET_WORD_CLOUD", wordCloud).then()
         this.$store.dispatch("SET_JSON_TABLE", table).then()
         this.$store.dispatch("SET_JSON_FILE", payload).then()
+        this.SET_READY(true)
       },
       sendRequest() {
         let formData = new FormData()

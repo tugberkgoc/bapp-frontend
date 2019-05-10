@@ -3,12 +3,28 @@
 
     <v-layout id="query" column>
 
-      <v-text-field
+      <v-combobox
           label="Query"
           v-model="query"
           v-on:keyup="enterPressed"
-      >
-      </v-text-field>
+          :items="items"
+      ></v-combobox>
+
+      <!--<v-select-->
+          <!--v-model="state"-->
+          <!--label="Select"-->
+          <!--:items="states"-->
+          <!--v-on:keyup="enterPressed"-->
+          <!--@input.native="loadStates"-->
+          <!--autocomplete-->
+      <!--&gt;</v-select>-->
+
+      <!--<v-text-field-->
+          <!--label="Query"-->
+          <!--v-model="query"-->
+          <!--v-on:keyup="enterPressed"-->
+      <!--&gt;-->
+      <!--</v-text-field>-->
 
       <div v-for="t in texts">
         <v-text-field
@@ -30,11 +46,15 @@
 </template>
 
 <script>
+  import debounce from 'debounce'
 
   export default {
     data: () => ({
       query: null,
       texts: [],
+      items: ["Lorem", "Ipsum", "Dolerom"],
+      state: null,
+      states: []
     }),
     components: {},
     methods: {
@@ -68,11 +88,18 @@
         this.$store.dispatch("SET_JSON_FILE", payload).then()
       },
       enterPressed(e) {
-        if (e.key === "Enter") {
+        if (e.key === "Enter" && this.query) {
           this.texts.push({text: this.query, bool: true})
           this.query = null
         }
-      }
+      },
+      loadStates: debounce((event) => {
+        if (event.target.value.length > 2) {
+          axios.get(`/api/states?q=${event.target.value}`).then(({ data }) => {
+            this.states = data
+          })
+        }
+      }, 200)
     }
   };
 </script>

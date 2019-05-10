@@ -94,34 +94,31 @@
         {id: 12, _color: '#653D5B'},
         {id: 13, _color: '#653D5B'},
         {id: 14, _color: '#653D5B'},
-        {id: 15, _color: '#653D5B'},
-        {id: 16, _color: '#653D5B'}
+        {id: 15, _color: '#653D5B'}
       ],
       links: [
         {sid: 1, tid: 2, _color: 'black'},
-        {sid: 2, tid: 8, _color: 'black'},
+        {sid: 2, tid: 3, _color: 'black'},
         {sid: 3, tid: 4, _color: 'black'},
         {sid: 4, tid: 5, _color: 'black'},
         {sid: 5, tid: 6, _color: 'black'},
+        {sid: 6, tid: 7, _color: 'black'},
         {sid: 7, tid: 8, _color: 'black'},
-        {sid: 5, tid: 8, _color: 'black'},
-        {sid: 3, tid: 8, _color: 'black'},
-        {sid: 7, tid: 9, _color: 'black'},
-        {sid: 10, tid: 9, _color: 'black'},
-        {sid: 11, tid: 8, _color: 'black'},
-        {sid: 12, tid: 7, _color: 'black'},
-        {sid: 13, tid: 5, _color: 'black'},
-        {sid: 14, tid: 6, _color: 'black'},
-        {sid: 15, tid: 4, _color: 'black'},
-        {sid: 16, tid: 3, _color: 'black'},
-        {sid: 16, tid: 1, _color: 'black'}
+        {sid: 8, tid: 9, _color: 'black'},
+        {sid: 9, tid: 10, _color: 'black'},
+        {sid: 10, tid: 11, _color: 'black'},
+        {sid: 11, tid: 12, _color: 'black'},
+        {sid: 12, tid: 13, _color: 'black'},
+        {sid: 13, tid: 14, _color: 'black'},
+        {sid: 14, tid: 15, _color: 'black'},
+        {sid: 15, tid: 1, _color: 'black'}
       ],
       options:
           {
             force: 3000,
-            nodeSize: 20,
+            nodeSize: 50,
             nodeLabels: false,
-            linkWidth: 10
+            linkWidth: 20
           }
     }),
     components: {

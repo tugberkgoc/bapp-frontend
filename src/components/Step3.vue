@@ -1,5 +1,5 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <v-layout v-if="E1 === '2'" column style="">
+  <v-layout v-if="E1 === '3'" column style="">
 
     <div class="firstVerticalBar">
 
@@ -34,15 +34,15 @@
 
     </div>
 
-    <div class="wordCloud">
-      <vue-word-cloud :words="WORD_CLOUD">
-        <template slot-scope="{text, weight, word}">
-          <div v-b-tooltip.hover :title="weight" style="cursor: pointer;" @click="onWordClick(word)">
-            {{ text }}
-          </div>
-        </template>
-      </vue-word-cloud>
-    </div>
+    <!--<div class="wordCloud">-->
+      <!--<vue-word-cloud :words="WORD_CLOUD">-->
+        <!--<template slot-scope="{text, weight, word}">-->
+          <!--<div v-b-tooltip.hover :title="weight" style="cursor: pointer;" @click="onWordClick(word)">-->
+            <!--{{ text }}-->
+          <!--</div>-->
+        <!--</template>-->
+      <!--</vue-word-cloud>-->
+    <!--</div>-->
 
   </v-layout>
 </template>
