@@ -7,6 +7,9 @@ import Vuetify from 'vuetify'
 
 import 'vuetify/dist/vuetify.min.css'
 
+import vBTooltip from 'bootstrap-vue/es/directives/tooltip/tooltip'
+Vue.directive('b-tooltip', vBTooltip)
+
 Vue.use(Vuetify)
 
 Vue.config.productionTip = false

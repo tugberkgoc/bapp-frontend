@@ -4,31 +4,15 @@
     <div class="firstVerticalBar">
 
       <div class="firstHeader">
-        <h3>Word / Length Histogram</h3>
+        <h3>Word / Frequency Histogram</h3>
       </div>
 
       <d3-vertical-bar
           style="display: flex;"
-          :data="data"
+          :data="JSON_FILE"
           :options="options"
           width="100%"
-          height="300px"> <!-- :margin="margin" -->
-      </d3-vertical-bar>
-
-    </div>
-
-    <div class="secondVerticalBar">
-
-      <div class="firstHeader">
-        <h3>Sentence / Length Histogram</h3>
-      </div>
-
-      <d3-vertical-bar
-          style="display: flex;"
-          :data="sentenceData"
-          :options="sentenceOptions"
-          width="100%"
-          height="300px"> <!-- :margin="margin" -->
+          height="700px"> <!-- :margin="margin" -->
       </d3-vertical-bar>
 
     </div>
@@ -37,7 +21,7 @@
 
       <v-data-table
           :headers="headers"
-          :items="wordFrequency"
+          :items="JSON_TABLE"
           class="elevation-1"
           style="padding-bottom: 50px"
       >
@@ -50,192 +34,50 @@
 
     </div>
 
-    <div class="secondTable">
-
-      <v-data-table
-          :headers="headersBottom"
-          :items="wordFrequencyBottom"
-          class="elevation-1"
-          style="padding-bottom: 50px"
-      >
-        <template v-slot:items="props">
-          <td>{{ props.item.number }}</td>
-          <td class="text-xs-left">{{ props.item.word }}</td>
-          <td class="text-xs-left">{{ props.item.frequency }}</td>
-        </template>
-      </v-data-table>
-
-    </div>
+    <!--<div class="wordCloud">-->
+      <!--<vue-word-cloud :words="WORD_CLOUD">-->
+        <!--<template slot-scope="{text, weight, word}">-->
+          <!--<div v-b-tooltip.hover :title="weight" style="cursor: pointer;" @click="onWordClick(word)">-->
+            <!--{{ text }}-->
+          <!--</div>-->
+        <!--</template>-->
+      <!--</vue-word-cloud>-->
+    <!--</div>-->
 
   </v-layout>
 </template>
 
 <script>
-  import {d3VerticalBar} from 'd3-vs';
-
-  import {mapState} from 'vuex';
+  import {d3VerticalBar} from 'd3-vs'
+  import vueWordCloud from 'vuewordcloud'
+  import {mapState} from 'vuex'
 
   export default {
     components: {
-      d3VerticalBar
+      d3VerticalBar,
+      vueWordCloud
     },
     data: () => {
       return {
-        data: [
-          {key: 'Tugberk', value: 10},
-          {key: 'Tugce', value: 5},
-          {key: 'Ali', value: 7},
-          {key: 'Mert', value: 8},
-          {key: 'Kemal', value: 9},
-          {key: 'Random', value: 3},
-          {key: 'Veli', value: 2},
-          {key: 'Ibrahim', value: 5}
-        ],
         options: {
           axisXLabel: 'Word',
-          axisYLabel: 'Length'
-        },
-        sentenceData: [
-          {key: 'Tugberk', value: 10},
-          {key: 'Tugce', value: 5},
-          {key: 'Ali', value: 7},
-          {key: 'Mert', value: 8},
-          {key: 'Kemal', value: 9},
-          {key: 'Random', value: 3},
-          {key: 'Veli', value: 2},
-          {key: 'Ibrahim', value: 5}
-        ],
-        sentenceOptions: {
-          axisXLabel: 'Sentence',
-          axisYLabel: 'Length'
+          axisYLabel: 'Frequency'
         },
         headers: [
           {
             text: 'Number',
             align: 'left',
-            sortable: false,
+            sortable: true,
             value: 'number'
           },
           { text: 'Word', value: 'word' },
           { text: 'Frequency', value: 'frequency' }
         ],
-        wordFrequency: [
-          {
-            number: 1,
-            word: 'frozen',
-            frequency: 159
-          },
-          {
-            number: 2,
-            word: 'tugberk',
-            frequency: 140
-          },
-          {
-            number: 3,
-            word: 'tugce',
-            frequency: 169
-          },
-          {
-            number: 4,
-            word: 'ali',
-            frequency: 120
-          },
-          {
-            number: 5,
-            word: 'veli',
-            frequency: 172
-          },
-          {
-            number: 6,
-            word: 'simge',
-            frequency: 164
-          },
-          {
-            number: 7,
-            word: 'umut',
-            frequency: 135
-          },
-          {
-            number: 8,
-            word: 'ekin',
-            frequency: 127
-          },
-          {
-            number: 9,
-            word: 'murat',
-            frequency: 174
-          },
-          {
-            number: 10,
-            word: 'dilara',
-            frequency: 152
-          }
-        ],
-        headersBottom: [
-          {
-            text: 'Number',
-            align: 'left',
-            sortable: false,
-            value: 'number'
-          },
-          { text: 'Word', value: 'word' },
-          { text: 'Frequency', value: 'frequency' }
-        ],
-        wordFrequencyBottom: [
-          {
-            number: 1,
-            word: 'frozen',
-            frequency: 159
-          },
-          {
-            number: 2,
-            word: 'tugberk',
-            frequency: 140
-          },
-          {
-            number: 3,
-            word: 'tugce',
-            frequency: 169
-          },
-          {
-            number: 4,
-            word: 'ali',
-            frequency: 120
-          },
-          {
-            number: 5,
-            word: 'veli',
-            frequency: 172
-          },
-          {
-            number: 6,
-            word: 'simge',
-            frequency: 164
-          },
-          {
-            number: 7,
-            word: 'umut',
-            frequency: 135
-          },
-          {
-            number: 8,
-            word: 'ekin',
-            frequency: 127
-          },
-          {
-            number: 9,
-            word: 'murat',
-            frequency: 174
-          },
-          {
-            number: 10,
-            word: 'dilara',
-            frequency: 152
-          }
-        ]
       }
     },
-    computed: mapState(['E1']),
+    computed: mapState(['E1', 'JSON_FILE', 'JSON_TABLE', 'WORD_CLOUD']),
+    methods: {
+    }
   }
 
 </script>
@@ -246,6 +88,11 @@
     padding-left: 50vw - 5px;
     padding-bottom 2.5vh;
     padding-top: 1vw;
+  }
+
+  .wordCloud {
+    width: 90vw;
+    height 50vh;
   }
 
 </style>
