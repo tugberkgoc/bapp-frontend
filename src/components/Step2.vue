@@ -13,9 +13,9 @@
 
     <div class="checkboxes">
 
-      <h1 style="margin-bottom: 20px;">Options</h1>
+        <h1 style="margin-bottom: 20px;">CLEANING OPTIONS</h1>
 
-      <div style="margin-left: 7vw;">
+      <div style="margin-left: 5vw;">
         <div v-for="c in checkboxes">
           <v-checkbox
               v-model="c.value"
@@ -47,11 +47,8 @@
     data: () => {
       return {
         checkboxes: [
-          {value: false, label: "Semantic"},
-          {value: false, label: "LoremIpsum"},
-          {value: false, label: "Voluptatibus"},
-          {value: false, label: "Salutandi"},
-          {value: false, label: "Ipsum"}
+          {value: false, label: "NON-ASCII"},
+          {value: false, label: "STOP WORDS"}
         ]
       }
     },
@@ -75,7 +72,10 @@
         this.POP_WORD_CLOUD(word)
       },
       isActive() {
-        this.CLEAN_PARAMETERS(this.UUID).then(x => {
+        let payload = []
+        payload.push(this.UUID)
+        payload.push(this.checkboxes)
+        this.CLEAN_PARAMETERS(payload).then(x => {
           x === 1 ? this.SET_READY(true) : ''
         })
       }
@@ -92,7 +92,7 @@
   }
 
   .checkboxes {
-    margin-top: 15vh;
+    margin-top: 30vh;
     width: 20vw;
     height 60vh;
     text-align: center;

@@ -96,7 +96,10 @@ export default new Vuex.Store({
       context.commit("SET_CHAT", data);
     },
     CLEAN_PARAMETERS: async (context, payload) => {
-      axios.post('https://corpuslivetest.herokuapp.com/api/cleaning/', {uuid: payload}).then(() => {
+      axios.post('https://corpuslivetest.herokuapp.com/api/cleaning/', {
+        uuid: payload[0],
+        checkboxes: payload[1]
+      }).then(() => {
         console.log("Success")
         return 1;
       }).catch(() => {
