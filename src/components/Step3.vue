@@ -37,7 +37,7 @@
     <div class="wordCloud">
       <vue-word-cloud :words="WORD_CLOUD">
         <template slot-scope="{text, weight, word}">
-          <div :title="weight" style="cursor: pointer;" @click="onWordClick(word)">
+          <div v-tooltip="'Word: ' + text + ', Frequency: ' + weight" :title="weight" style="cursor: pointer;" @click="onWordClick(word)">
             {{ text }}
           </div>
         </template>
@@ -91,7 +91,7 @@
   }
 
   .wordCloud {
-    width: 100vw;
+    width: 97vw;
     height 100vh;
   }
 

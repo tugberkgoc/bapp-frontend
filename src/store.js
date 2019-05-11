@@ -7,12 +7,13 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    E1: 1,
+    E1: '1',
     JSON_FILE: '',
     JSON_TABLE: '',
     WORD_CLOUD: '',
     READY: false,
     UUID: '',
+    BUTTON_NAME: 'Cancel'
   },
   plugins: [createPersistedState()],
   getters: {
@@ -29,7 +30,8 @@ export default new Vuex.Store({
       return state.WORD_CLOUD
     },
     READY: state => state.READY,
-    UUID: state => state.UUID
+    UUID: state => state.UUID,
+    BUTTON_NAME: state => state.BUTTON_NAME
   },
   mutations: {
     SET_E1: (state, payload) => {
@@ -41,6 +43,7 @@ export default new Vuex.Store({
       state.JSON_TABLE = ''
       state.WORD_CLOUD = ''
       state.READY = false
+      state.BUTTON_NAME = 'Cancel'
     },
     SET_JSON_FILE: (state, payload) => {
       state.JSON_FILE = payload
@@ -62,6 +65,9 @@ export default new Vuex.Store({
     },
     SET_UUID: (state, payload) => {
       state.UUID = payload
+    },
+    SET_BUTTON_NAME: (state, payload) => {
+      state.BUTTON_NAME = payload
     }
   },
   actions: {

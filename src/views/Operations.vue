@@ -105,43 +105,50 @@
     },
     data() {
       return {
-        buttonName: 'Cancel'
+        buttonName: ''
       }
     },
     computed: {
-      ...mapState(['E1', 'READY']),
-      buttonNameChanged() {
-        if (this.$store.getters.E1 === 1) {
-          this.buttonName = 'Cancel'
-        } else {
-          this.buttonName = 'Back'
-        }
-      }
+      ...mapState(['E1', 'READY', 'BUTTON_NAME'])
+    },
+    created() {
+      this.buttonName = this.$store.getters.BUTTON_NAME;
     },
     methods: {
       ...mapMutations({
         SET_READY: 'SET_READY',
-        SET_E1: 'SET_E1'
+        SET_E1: 'SET_E1',
+        SET_BUTTON_NAME: 'SET_BUTTON_NAME',
+        SET_ZERO: 'SET_ZERO'
       }),
       increaseStep() {
-        if (parseInt(this.$store.getters.E1) !== 4) {
-          this.SET_E1(parseInt(this.$store.getters.E1) + 1)
+        let step = parseInt(this.$store.getters.E1)
+        if (step !== 4) {
+          this.SET_E1(step + 1)
           if (parseInt(this.$store.getters.E1) === 3) {
             window.location.reload()
           }
         }
+        if(step === 1) {
+          this.SET_BUTTON_NAME('Back')
+          this.buttonName = 'Back'
+        }
         this.SET_READY(false)
-        this.buttonNameChanged()
       },
       back() {
-        if (this.$store.getters.E1 !== 1) {
-          this.SET_E1(this.$store.getters.E1 - 1);
+        let step = parseInt(this.$store.getters.E1)
+        if (step !== 1) {
+          this.SET_E1(step - 1);
         }
-        this.buttonNameChanged()
+        if(step === 2) {
+          this.SET_BUTTON_NAME('Cancel')
+          this.buttonName = 'Cancel'
+          // this.SET_ZERO()
+        }
       },
       defaultState() {
         this.$store.dispatch("SET_ZERO").then()
-      }
+      },
     }
   }
 </script>
