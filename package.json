@@ -16,6 +16,7 @@
     "vue": "^2.6.10",
     "vue-d3-network": "^0.1.28",
     "vue-router": "^3.0.3",
+    "vue-uuid": "^1.1.1",
     "vue2-dropzone": "^3.5.9",
     "vuetify": "^1.5.5",
     "vuewordcloud": "^18.7.11",

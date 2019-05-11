@@ -60,12 +60,20 @@
 
         <v-btn
             class="cancel"
-            v-on:click="cancel"
+            v-on:click="back"
             color="primary">
-          Cancel
+          {{ buttonName }}
         </v-btn>
 
         <v-divider></v-divider>
+
+        <v-btn
+            class="continue"
+            color="primary"
+            style="margin-right: 12vw;"
+            @click="defaultState">
+          DEFAULT
+        </v-btn>
 
         <v-btn
             class="continue"
@@ -97,24 +105,43 @@
       UploadTabs
     },
     data() {
-      return {}
+      return {
+        buttonName: 'Cancel'
+      }
     },
-    computed: mapState(['E1', 'READY']),
+    computed: {
+      ...mapState(['E1', 'READY']),
+      buttonNameChanged() {
+        if(this.$store.getters.E1 === 1) {
+          this.buttonName = 'Cancel'
+        } else {
+          this.buttonName = 'Back'
+        }
+      }
+    },
     methods: {
       ...mapMutations({
-        SET_READY: 'SET_READY'
+        SET_READY: 'SET_READY',
+        SET_E1: 'SET_E1'
       }),
       increaseStep() {
         if (this.$store.getters.E1 !== '4') {
-          this.$store.dispatch("SET_E1")
+          this.SET_E1(this.$store.getters.E1 + 1)
           if (this.$store.getters.E1 === '3') {
             window.location.reload()
           }
         }
         this.SET_READY(false)
+        this.buttonNameChanged()
       },
-      cancel() {
-        this.$store.dispatch("SET_E1_ZERO").then()
+      back() {
+        if(this.$store.getters.E1 !== 1) {
+          this.SET_E1(this.$store.getters.E1 - 1);
+        }
+        this.buttonNameChanged()
+      },
+      defaultState() {
+        this.$store.dispatch("SET_ZERO").then()
       }
     }
   }

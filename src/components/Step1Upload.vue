@@ -33,6 +33,7 @@
 <script>
   import vueDropzone from "vue2-dropzone";
   import 'vue2-dropzone/dist/vue2Dropzone.min.css'
+  import { uuid } from 'vue-uuid';
   import {mapMutations} from 'vuex'
 
   export default {
@@ -46,15 +47,18 @@
         // init: function() {
         //   this.on("addedfile", function(file) { this.sendFileTubi(file); });
         // }
-      },
-      file: ''
+      }
     }),
     components: {
       vueDropzone
     },
     methods: {
       ...mapMutations({
-        SET_READY: 'SET_READY'
+        SET_READY: 'SET_READY',
+        SET_WORD_CLOUD: "SET_WORD_CLOUD",
+        SET_JSON_TABLE: "SET_JSON_TABLE",
+        SET_JSON_FILE: "SET_JSON_FILE",
+        SET_UUID: "SET_UUID"
       }),
       removeAllFiles() {
         this.$refs.dropzone.removeAllFiles();
@@ -84,28 +88,16 @@
           })
           temp = temp + 1
         })
-        this.$store.dispatch("SET_WORD_CLOUD", wordCloud).then()
-        this.$store.dispatch("SET_JSON_TABLE", table).then()
-        this.$store.dispatch("SET_JSON_FILE", payload).then()
+        this.SET_WORD_CLOUD(wordCloud)
+        this.SET_JSON_TABLE(table)
+        this.SET_JSON_FILE(payload)
         this.SET_READY(true)
       },
-      sendRequest() {
-        let formData = new FormData()
-
-        formData.append('file', this.file)
-        formData.append('remark', "Hello World")
-
-        this.$store.dispatch("SET_JSON_FILE", formData).then(x => console.log(`Status Code : ${x}`));
-
-        // axios.post("http://localhost:8000/api/upload/", formData,{
-        //   headers: {'content-type':'multipart/form-data'}
-        // }).then(x => console.log(x))
-      },
-      handleFileUpload() {
-        this.file = this.$refs.file.files[0];
-      },
       sendingEvent(file, xhr, formData) {
+        let uuid = this.$uuid.v1()
+        this.SET_UUID(uuid)
         formData.append('remark', "Hello World")
+        formData.append('uuid', uuid)
       }
     }
   };

@@ -11,7 +11,8 @@ export default new Vuex.Store({
     JSON_FILE: '',
     JSON_TABLE: '',
     WORD_CLOUD: '',
-    READY: false
+    READY: false,
+    UUID: '',
   },
   plugins: [createPersistedState()],
   getters: {
@@ -27,15 +28,19 @@ export default new Vuex.Store({
     WORD_CLOUD: state => {
       return state.WORD_CLOUD
     },
-    READY: state => state.READY
+    READY: state => state.READY,
+    UUID: state => state.UUID
   },
   mutations: {
-    SET_E1: (state) => {
-      state.E1 = (parseInt(state.E1) + 1).toString()
+    SET_E1: (state, payload) => {
+      state.E1 = parseInt(payload).toString()
     },
-    SET_E1_ZERO: (state) => {
+    SET_ZERO: (state) => {
       state.E1 = 1
       state.JSON_FILE = ''
+      state.JSON_TABLE = ''
+      state.WORD_CLOUD = ''
+      state.READY = false
     },
     SET_JSON_FILE: (state, payload) => {
       state.JSON_FILE = payload
@@ -47,13 +52,16 @@ export default new Vuex.Store({
       state.WORD_CLOUD = payload
     },
     POP_WORD_CLOUD: (state, payload) => {
-      let removeIndex = state.WORD_CLOUD.map(item => item.text ).indexOf(payload.text);
+      let removeIndex = state.WORD_CLOUD.map(item => item.text).indexOf(payload.text);
       state.WORD_CLOUD.splice(removeIndex, 1);
       state.JSON_FILE.splice(removeIndex, 1);
       state.JSON_TABLE.splice(removeIndex, 1);
     },
     SET_READY: (state, payload) => {
       state.READY = payload
+    },
+    SET_UUID: (state, payload) => {
+      state.UUID = payload
     }
   },
   actions: {
@@ -87,6 +95,15 @@ export default new Vuex.Store({
       console.log(data);
       context.commit("SET_CHAT", data);
     },
+    CLEAN_PARAMETERS: async (context, payload) => {
+      axios.post('https://corpuslivetest.herokuapp.com/api/cleaning/', {uuid: payload}).then(() => {
+        console.log("Success")
+        return 1;
+      }).catch(() => {
+        console.log("Failure")
+        return 0;
+      })
+    },
     ADD_CHAT: (context, payload) => {
       context.commit("ADD_CHAT", payload);
     },
@@ -96,11 +113,11 @@ export default new Vuex.Store({
     SET_EMPTY_STORE: (context, payload) => {
       context.commit("SET_EMPTY", payload);
     },
-    SET_E1: (context) => {
-      context.commit("SET_E1")
+    SET_E1: (context, payload) => {
+      context.commit("SET_E1", payload)
     },
-    SET_E1_ZERO: (context) => {
-      context.commit("SET_E1_ZERO")
+    SET_ZERO: (context) => {
+      context.commit("SET_ZERO")
     },
     SET_JSON_FILE: async (context, payload) => {
       context.commit("SET_JSON_FILE", payload)

@@ -28,7 +28,7 @@
           class="continue"
           color="primary"
           @click="isActive">
-        Continue
+        SUBMIT
       </v-btn>
 
     </div>
@@ -38,8 +38,7 @@
 
 <script>
   import vueWordCloud from 'vuewordcloud'
-  import {mapState, mapMutations} from 'vuex'
-
+  import {mapState, mapMutations, mapActions} from 'vuex'
 
   export default {
     components: {
@@ -56,17 +55,29 @@
         ]
       }
     },
-    computed: mapState(['E1', 'WORD_CLOUD']),
+    computed: {
+      ...mapState({
+        E1: 'E1',
+        WORD_CLOUD: 'WORD_CLOUD',
+        UUID: "UUID"
+      })
+    },
     methods: {
       ...mapMutations({
         POP_WORD_CLOUD: 'POP_WORD_CLOUD',
         SET_READY: 'SET_READY'
+
+      }),
+      ...mapActions({
+        CLEAN_PARAMETERS: "CLEAN_PARAMETERS"
       }),
       onWordClick(word) {
         this.POP_WORD_CLOUD(word)
       },
       isActive() {
-        this.SET_READY(true)
+        this.CLEAN_PARAMETERS(this.UUID).then(x => {
+          x === 1 ? this.SET_READY(true) : ''
+        })
       }
     }
   }
