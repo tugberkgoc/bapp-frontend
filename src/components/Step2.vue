@@ -82,7 +82,7 @@
         })
         payload.push(checkboxes)
         this.CLEAN_PARAMETERS(payload).then(x => {
-          x === 1 ? this.SET_READY(true) : ''
+          x === 1 ? console.log("Success 2") : console.log("Failure 2")
         })
       }
     }
@@ -98,7 +98,7 @@
   }
 
   .checkboxes {
-    margin-top: 30vh;
+    margin-top: 25vh;
     width: 20vw;
     height 60vh;
     text-align: center;
