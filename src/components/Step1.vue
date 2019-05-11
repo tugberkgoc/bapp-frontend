@@ -18,7 +18,6 @@
           v-on:vdropzone-sending="sendingEvent"
           :useCustomSlot=true>
         <div class="dropzone-custom-content">
-          <v-icon color="info" :large="true">cloud_upload</v-icon>
           <h3 class="dropzone-custom-title">Drag and drop to upload content!</h3>
           <div class="subtitle">...or click to select a file from your computer</div>
         </div>
@@ -33,7 +32,6 @@
 <script>
   import vueDropzone from "vue2-dropzone";
   import 'vue2-dropzone/dist/vue2Dropzone.min.css'
-  import {mapMutations} from 'vuex'
 
   export default {
     data: () => ({
@@ -53,9 +51,6 @@
       vueDropzone
     },
     methods: {
-      ...mapMutations({
-        SET_READY: 'SET_READY'
-      }),
       removeAllFiles() {
         this.$refs.dropzone.removeAllFiles();
       },
@@ -65,29 +60,16 @@
 
         let payload = []
         let table = []
-        let wordCloud = []
         let temp = 1
         let array = JSON.parse("[" + file.xhr.response + "]");
         array[0].forEach(x => {
           payload.push({key: x[0], value: parseInt(x[1])})
           table.push({number: temp, word: x[0], frequency: parseInt(x[1])})
-          wordCloud.push({
-            text: x[0],
-            weight: parseInt(x[1]),
-            rotation: 1,
-            rotationUnit: 'turn',
-            fontFamily: 'Anton',
-            fontStyle: 'italic', // normal|italic|oblique|initial|inherit
-            fontVariant: '', // normal|small-caps|initial|inherit
-            fontWeight: '', // normal|bold|bolder|lighter|number|initial|inherit
-            color: '#' + (Math.random().toString(16) + "000000").substring(2, 8)
-          })
           temp = temp + 1
         })
-        this.$store.dispatch("SET_WORD_CLOUD", wordCloud).then()
-        this.$store.dispatch("SET_JSON_TABLE", table).then()
-        this.$store.dispatch("SET_JSON_FILE", payload).then()
-        this.SET_READY(true)
+
+        this.$store.dispatch("SET_JSON_TABLE", table).then();
+        this.$store.dispatch("SET_JSON_FILE", payload).then();
       },
       sendRequest() {
         let formData = new FormData()
@@ -114,7 +96,6 @@
 <style scoped>
 
   #drop1 {
-    height: 35vh;
   }
 
   #app {
@@ -122,7 +103,7 @@
   }
 
   .dropzone-custom-content {
-    margin-top: 13vh;
+    padding-top: 13vh;
     position: relative;
     top: 50%;
     left: 50%;

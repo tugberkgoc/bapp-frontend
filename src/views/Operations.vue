@@ -7,26 +7,34 @@
 
         <v-stepper-header>
 
-          <v-stepper-step :complete="E1 > 1" step="1">Upload Data</v-stepper-step> <!-- editable -->
+          <v-stepper-step :complete="E1 > 1" step="1">Upload Files</v-stepper-step> <!-- editable -->
 
           <v-divider></v-divider>
 
-          <v-stepper-step :complete="E1 > 2" step="2">Preview - Processing</v-stepper-step>
+          <v-stepper-step :complete="E1 > 2" step="2">First Cleaning</v-stepper-step>
 
           <v-divider></v-divider>
 
-          <v-stepper-step :complete="E1 > 3" step="3">Cleaning</v-stepper-step>
+          <v-stepper-step :complete="E1 > 3" step="3">Second Cleaning</v-stepper-step>
 
           <v-divider></v-divider>
 
-          <v-stepper-step :complete="E1 > 4" step="4">Download</v-stepper-step>
+          <v-stepper-step :complete="E1 > 4" step="4">Third Cleaning</v-stepper-step>
 
         </v-stepper-header>
 
         <v-stepper-items>
           <v-stepper-content step="1">
 
-            <UploadTabs/>
+            <div v-if="false" class="text-xs-center">
+              <v-progress-circular
+                  :size="50"
+                  color="primary"
+                  indeterminate
+              ></v-progress-circular>
+            </div>
+
+            <Step1/>
 
           </v-stepper-content>
 
@@ -71,7 +79,7 @@
             class="continue"
             color="primary"
             @click="increaseStep"
-            :disabled="READY === false">
+            :disabled="JSON_FILE === '' || E1 === '4' || E1 === '3' || E1 === '2'">
           Continue
         </v-btn>
 
@@ -82,36 +90,32 @@
 </template>
 
 <script>
+  import Step1 from '../components/Step1'
   import Step2 from '../components/Step2'
   import Step3 from '../components/Step3'
   import Step4 from '../components/Step4'
-  import UploadTabs from './UploadTabs'
 
-  import {mapState, mapMutations} from 'vuex'
+  import {mapState} from 'vuex'
 
   export default {
     components: {
+      Step1,
       Step2,
       Step3,
-      Step4,
-      UploadTabs
+      Step4
     },
     data() {
       return {}
     },
-    computed: mapState(['E1', 'READY']),
+    computed: mapState(['E1', 'JSON_FILE']),
     methods: {
-      ...mapMutations({
-        SET_READY: 'SET_READY'
-      }),
       increaseStep() {
         if (this.$store.getters.E1 !== '4') {
           this.$store.dispatch("SET_E1")
-          if (this.$store.getters.E1 === '3') {
+          if (this.$store.getters.E1 === '2' || this.$store.getters.E1 === '3') {
             window.location.reload()
           }
         }
-        this.SET_READY(false)
       },
       cancel() {
         this.$store.dispatch("SET_E1_ZERO").then()

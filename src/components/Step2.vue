@@ -1,72 +1,182 @@
-<template>
-  <v-layout v-if="E1 === '2'" row style="">
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
+  <v-layout v-if="E1 === '2'" column style="">
 
-    <div class="wordCloud">
-      <vue-word-cloud :words="WORD_CLOUD">
-        <template slot-scope="{text, weight, word}">
-          <div :title="weight" style="cursor: pointer;" @click="onWordClick(word)">
-            {{ text }}
-          </div>
-        </template>
-      </vue-word-cloud>
-    </div>
+    <div class="firstVerticalBar">
 
-    <div class="checkboxes">
-
-      <h1 style="margin-bottom: 20px;">Options</h1>
-
-      <div style="margin-left: 7vw;">
-        <div v-for="c in checkboxes">
-          <v-checkbox
-              v-model="c.value"
-              :label="c.label"
-          ></v-checkbox>
-        </div>
+      <div class="firstHeader">
+        <h3>Word / Frequency Histogram</h3>
       </div>
 
-      <v-btn
-          class="continue"
-          color="primary"
-          @click="isActive">
-        Continue
-      </v-btn>
+      <d3-vertical-bar
+          style="display: flex;"
+          :data="JSON_FILE"
+          :options="options"
+          width="100%"
+          height="700px"> <!-- :margin="margin" -->
+      </d3-vertical-bar>
 
     </div>
+
+    <!--<div class="secondVerticalBar">-->
+
+      <!--<div class="firstHeader">-->
+        <!--<h3>Sentence / Length Histogram</h3>-->
+      <!--</div>-->
+
+      <!--<d3-vertical-bar-->
+          <!--style="display: flex;"-->
+          <!--:data="sentenceData"-->
+          <!--:options="sentenceOptions"-->
+          <!--width="100%"-->
+          <!--height="300px"> &lt;!&ndash; :margin="margin" &ndash;&gt;-->
+      <!--</d3-vertical-bar>-->
+
+    <!--</div>-->
+
+    <div class="firstTable">
+
+      <v-data-table
+          :headers="headers"
+          :items="JSON_TABLE"
+          class="elevation-1"
+          style="padding-bottom: 50px"
+      >
+        <template v-slot:items="props">
+          <td>{{ props.item.number }}</td>
+          <td class="text-xs-left">{{ props.item.word }}</td>
+          <td class="text-xs-left">{{ props.item.frequency }}</td>
+        </template>
+      </v-data-table>
+
+    </div>
+
+    <!--<div class="secondTable">-->
+
+      <!--<v-data-table-->
+          <!--:headers="headersBottom"-->
+          <!--:items="wordFrequencyBottom"-->
+          <!--class="elevation-1"-->
+          <!--style="padding-bottom: 50px"-->
+      <!--&gt;-->
+        <!--<template v-slot:items="props">-->
+          <!--<td>{{ props.item.number }}</td>-->
+          <!--<td class="text-xs-left">{{ props.item.word }}</td>-->
+          <!--<td class="text-xs-left">{{ props.item.frequency }}</td>-->
+        <!--</template>-->
+      <!--</v-data-table>-->
+
+    <!--</div>-->
 
   </v-layout>
 </template>
 
 <script>
-  import vueWordCloud from 'vuewordcloud'
-  import {mapState, mapMutations} from 'vuex'
+  import {d3VerticalBar} from 'd3-vs';
 
+  import {mapState} from 'vuex';
 
   export default {
     components: {
-      vueWordCloud
+      d3VerticalBar
     },
     data: () => {
       return {
-        checkboxes: [
-          {value: false, label: "Semantic"},
-          {value: false, label: "LoremIpsum"},
-          {value: false, label: "Voluptatibus"},
-          {value: false, label: "Salutandi"},
-          {value: false, label: "Ipsum"}
-        ]
+        options: {
+          axisXLabel: 'Word',
+          axisYLabel: 'Frequency'
+        },
+        // sentenceData: [
+        //   {key: 'Tugberk', value: 10},
+        //   {key: 'Tugce', value: 5},
+        //   {key: 'Ali', value: 7},
+        //   {key: 'Mert', value: 8},
+        //   {key: 'Kemal', value: 9},
+        //   {key: 'Random', value: 3},
+        //   {key: 'Veli', value: 2},
+        //   {key: 'Ibrahim', value: 5}
+        // ],
+        // sentenceOptions: {
+        //   axisXLabel: 'Sentence',
+        //   axisYLabel: 'Length'
+        // },
+        headers: [
+          {
+            text: 'Number',
+            align: 'left',
+            sortable: true,
+            value: 'number'
+          },
+          { text: 'Word', value: 'word' },
+          { text: 'Frequency', value: 'frequency' }
+        ],
+        // headersBottom: [
+        //   {
+        //     text: 'Number',
+        //     align: 'left',
+        //     sortable: false,
+        //     value: 'number'
+        //   },
+        //   { text: 'Word', value: 'word' },
+        //   { text: 'Frequency', value: 'frequency' }
+        // ],
+        // wordFrequencyBottom: [
+        //   {
+        //     number: 1,
+        //     word: 'frozen',
+        //     frequency: 159
+        //   },
+        //   {
+        //     number: 2,
+        //     word: 'tugberk',
+        //     frequency: 140
+        //   },
+        //   {
+        //     number: 3,
+        //     word: 'tugce',
+        //     frequency: 169
+        //   },
+        //   {
+        //     number: 4,
+        //     word: 'ali',
+        //     frequency: 120
+        //   },
+        //   {
+        //     number: 5,
+        //     word: 'veli',
+        //     frequency: 172
+        //   },
+        //   {
+        //     number: 6,
+        //     word: 'simge',
+        //     frequency: 164
+        //   },
+        //   {
+        //     number: 7,
+        //     word: 'umut',
+        //     frequency: 135
+        //   },
+        //   {
+        //     number: 8,
+        //     word: 'ekin',
+        //     frequency: 127
+        //   },
+        //   {
+        //     number: 9,
+        //     word: 'murat',
+        //     frequency: 174
+        //   },
+        //   {
+        //     number: 10,
+        //     word: 'dilara',
+        //     frequency: 152
+        //   }
+        // ]
       }
     },
-    computed: mapState(['E1', 'WORD_CLOUD']),
+    computed: mapState(['E1', 'JSON_FILE', 'JSON_TABLE']),
     methods: {
-      ...mapMutations({
-        POP_WORD_CLOUD: 'POP_WORD_CLOUD',
-        SET_READY: 'SET_READY'
-      }),
-      onWordClick(word) {
-        this.POP_WORD_CLOUD(word)
-      },
-      isActive() {
-        this.SET_READY(true)
+      convertData() {
+
       }
     }
   }
@@ -75,16 +185,10 @@
 
 <style lang="stylus" scoped>
 
-  .wordCloud {
-    width: 80vw;
-    height 80vh;
-  }
-
-  .checkboxes {
-    margin-top: 15vh;
-    width: 20vw;
-    height 60vh;
-    text-align: center;
+  .firstHeader {
+    padding-left: 50vw - 5px;
+    padding-bottom 2.5vh;
+    padding-top: 1vw;
   }
 
 </style>

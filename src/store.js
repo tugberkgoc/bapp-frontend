@@ -9,9 +9,7 @@ export default new Vuex.Store({
   state: {
     E1: 1,
     JSON_FILE: '',
-    JSON_TABLE: '',
-    WORD_CLOUD: '',
-    READY: false
+    JSON_TABLE: ''
   },
   plugins: [createPersistedState()],
   getters: {
@@ -22,12 +20,8 @@ export default new Vuex.Store({
       return state.JSON_FILE
     },
     JSON_TABLE: state => {
-      return state.JSON_TABLE
+      return state.JSON_FILE
     },
-    WORD_CLOUD: state => {
-      return state.WORD_CLOUD
-    },
-    READY: state => state.READY
   },
   mutations: {
     SET_E1: (state) => {
@@ -42,18 +36,6 @@ export default new Vuex.Store({
     },
     SET_JSON_TABLE: (state, payload) => {
       state.JSON_TABLE = payload
-    },
-    SET_WORD_CLOUD: (state, payload) => {
-      state.WORD_CLOUD = payload
-    },
-    POP_WORD_CLOUD: (state, payload) => {
-      let removeIndex = state.WORD_CLOUD.map(item => item.text ).indexOf(payload.text);
-      state.WORD_CLOUD.splice(removeIndex, 1);
-      state.JSON_FILE.splice(removeIndex, 1);
-      state.JSON_TABLE.splice(removeIndex, 1);
-    },
-    SET_READY: (state, payload) => {
-      state.READY = payload
     }
   },
   actions: {
@@ -108,8 +90,5 @@ export default new Vuex.Store({
     SET_JSON_TABLE: async (context, payload) => {
       context.commit("SET_JSON_TABLE", payload)
     },
-    SET_WORD_CLOUD: async (context, payload) => {
-      context.commit("SET_WORD_CLOUD", payload)
-    }
   },
 })
