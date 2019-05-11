@@ -74,7 +74,13 @@
       isActive() {
         let payload = []
         payload.push(this.UUID)
-        payload.push(this.checkboxes)
+        let checkboxes = []
+        this.checkboxes.forEach(x => {
+          if(x.value === true) {
+            checkboxes.push(x.label)
+          }
+        })
+        payload.push(checkboxes)
         this.CLEAN_PARAMETERS(payload).then(x => {
           x === 1 ? this.SET_READY(true) : ''
         })
