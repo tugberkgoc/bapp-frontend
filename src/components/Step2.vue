@@ -47,8 +47,8 @@
     data: () => {
       return {
         checkboxes: [
-          {value: false, label: "NON-ASCII"},
-          {value: false, label: "STOP WORDS"}
+          {label: "NON-ASCII", value: false},
+          {label: "STOP WORDS", value: false}
         ]
       }
     },

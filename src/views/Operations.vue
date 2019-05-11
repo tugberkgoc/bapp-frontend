@@ -68,9 +68,8 @@
         <v-divider></v-divider>
 
         <v-btn
-            class="continue"
+            class="default"
             color="primary"
-            style="margin-right: 12vw;"
             @click="defaultState">
           DEFAULT
         </v-btn>
@@ -112,7 +111,7 @@
     computed: {
       ...mapState(['E1', 'READY']),
       buttonNameChanged() {
-        if(this.$store.getters.E1 === 1) {
+        if (this.$store.getters.E1 === 1) {
           this.buttonName = 'Cancel'
         } else {
           this.buttonName = 'Back'
@@ -135,7 +134,7 @@
         this.buttonNameChanged()
       },
       back() {
-        if(this.$store.getters.E1 !== 1) {
+        if (this.$store.getters.E1 !== 1) {
           this.SET_E1(this.$store.getters.E1 - 1);
         }
         this.buttonNameChanged()
@@ -172,6 +171,12 @@
     position: absolute;
     top: 5px;
     right: 25px;
+  }
+
+  .default {
+    position: absolute;
+    top: 5px;
+    right: 150px;
   }
 
   .cancel {
