@@ -34,15 +34,15 @@
 
     </div>
 
-    <!--<div class="wordCloud">-->
-      <!--<vue-word-cloud :words="WORD_CLOUD">-->
-        <!--<template slot-scope="{text, weight, word}">-->
-          <!--<div v-b-tooltip.hover :title="weight" style="cursor: pointer;" @click="onWordClick(word)">-->
-            <!--{{ text }}-->
-          <!--</div>-->
-        <!--</template>-->
-      <!--</vue-word-cloud>-->
-    <!--</div>-->
+    <div class="wordCloud">
+      <vue-word-cloud :words="WORD_CLOUD">
+        <template slot-scope="{text, weight, word}">
+          <div :title="weight" style="cursor: pointer;" @click="onWordClick(word)">
+            {{ text }}
+          </div>
+        </template>
+      </vue-word-cloud>
+    </div>
 
   </v-layout>
 </template>
@@ -91,8 +91,8 @@
   }
 
   .wordCloud {
-    width: 90vw;
-    height 50vh;
+    width: 100vw;
+    height 100vh;
   }
 
 </style>

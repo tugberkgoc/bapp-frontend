@@ -96,45 +96,37 @@ export default new Vuex.Store({
       context.commit("SET_CHAT", data);
     },
     CLEAN_PARAMETERS: async (context, payload) => {
-      axios.post('https://corpuslivetest.herokuapp.com/api/cleaning/', {
+      axios.post('http://localhost:8000/api/cleaning/', {
         uuid: payload[0],
         checkboxes: payload[1],
-        mostCommon: 100,
-      }).then((file) => {
-        console.log(file);
-        console.log(file.status);
-
-        let payload = []
-        let table = []
-        let wordCloud = []
-        let temp = 1
-        let array = JSON.parse("[" + file.xhr.response + "]");
-        array[0].forEach(x => {
-          payload.push({key: x[0], value: parseInt(x[1])})
-          table.push({number: temp, word: x[0], frequency: parseInt(x[1])})
-          wordCloud.push({
-            text: x[0],
-            weight: parseInt(x[1]),
-            rotation: 1,
-            rotationUnit: 'turn',
-            fontFamily: 'Anton',
-            fontStyle: 'italic', // normal|italic|oblique|initial|inherit
-            fontVariant: '', // normal|small-caps|initial|inherit
-            fontWeight: '', // normal|bold|bolder|lighter|number|initial|inherit
-            color: '#' + (Math.random().toString(16) + "000000").substring(2, 8)
+        mostCommon: 50,
+      }).then((response) => {
+        if (response.status === 200) {
+          let payload = []
+          let table = []
+          let wordCloud = []
+          let temp = 1
+          response.data.forEach(x => {
+            payload.push({key: x[0], value: parseInt(x[1])})
+            table.push({number: temp, word: x[0], frequency: parseInt(x[1])})
+            wordCloud.push({
+              text: x[0],
+              weight: parseInt(x[1]),
+              rotation: 1,
+              rotationUnit: 'turn',
+              fontFamily: 'Anton',
+              fontStyle: 'italic', // normal|italic|oblique|initial|inherit
+              fontVariant: '', // normal|small-caps|initial|inherit
+              fontWeight: '', // normal|bold|bolder|lighter|number|initial|inherit
+              color: '#' + (Math.random().toString(16) + "000000").substring(2, 8)
+            })
+            temp = temp + 1
           })
-          temp = temp + 1
-        })
-        this.SET_WORD_CLOUD(wordCloud)
-        this.SET_JSON_TABLE(table)
-        this.SET_JSON_FILE(payload)
-        this.SET_READY(true)
-
-        console.log("Success")
-        return 1;
-      }).catch(() => {
-        console.log("Failure")
-        return 0;
+          context.commit("SET_WORD_CLOUD", wordCloud)
+          context.commit("SET_JSON_TABLE", table)
+          context.commit("SET_JSON_FILE", payload)
+          context.commit("SET_READY", true)
+        }
       })
     },
     ADD_CHAT: (context, payload) => {

@@ -124,9 +124,9 @@
         SET_E1: 'SET_E1'
       }),
       increaseStep() {
-        if (this.$store.getters.E1 !== '4') {
-          this.SET_E1(this.$store.getters.E1 + 1)
-          if (this.$store.getters.E1 === '3') {
+        if (parseInt(this.$store.getters.E1) !== 4) {
+          this.SET_E1(parseInt(this.$store.getters.E1) + 1)
+          if (parseInt(this.$store.getters.E1) === 3) {
             window.location.reload()
           }
         }

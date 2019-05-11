@@ -81,9 +81,7 @@
           }
         })
         payload.push(checkboxes)
-        this.CLEAN_PARAMETERS(payload).then(x => {
-          x === 1 ? console.log("Success 2") : console.log("Failure 2")
-        })
+        this.CLEAN_PARAMETERS(payload)
       }
     }
   }
