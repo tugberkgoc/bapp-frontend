@@ -61,7 +61,8 @@
       return {
         options: {
           axisXLabel: 'Word',
-          axisYLabel: 'Frequency'
+          axisYLabel: 'Frequency',
+          barTitle: d => d.key + ' ' + d.value
         },
         headers: [
           {
