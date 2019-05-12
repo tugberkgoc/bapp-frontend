@@ -4,7 +4,8 @@
     <div class="wordCloud">
       <vue-word-cloud :words="WORD_CLOUD">
         <template slot-scope="{text, weight, word}">
-          <div v-tooltip="'Word: ' + text + ', Frequency: ' + weight" :title="weight" style="cursor: pointer;" @click="onWordClick(word)">
+          <div v-tooltip="'Word: ' + text + ', Frequency: ' + weight" style="cursor: pointer;"
+               @click="onWordClick(word)">
             {{ text }}
           </div>
         </template>
@@ -17,7 +18,7 @@
 
     <div class="checkboxes">
 
-        <h1 style="margin-bottom: 20px;">Cleaning Options</h1>
+      <h1 style="margin-bottom: 20px;">Cleaning Options</h1>
 
       <div>
         <div v-for="c in checkboxes">
@@ -79,25 +80,23 @@
         SET_READY: 'SET_READY'
 
       }),
-      ...mapActions({
-        CLEAN_PARAMETERS: "CLEAN_PARAMETERS"
-      }),
+      ...mapActions({}),
       onWordClick(word) {
         this.POP_WORD_CLOUD(word)
       },
       isActive() {
-        this.loading = true //TODO: After receiving data from server turn as false
+        this.loading = true
         let payload = []
         payload.push(this.UUID)
         let checkboxes = []
         this.checkboxes.forEach(x => {
-          if(x.value === true) {
+          if (x.value === true) {
             checkboxes.push(x.label)
           }
         })
         payload.push(checkboxes)
         payload.push(this.howMany)
-        this.CLEAN_PARAMETERS(payload)
+        this.$store.dispatch("CLEAN_PARAMETERS", payload).then(() => this.loading = false) //TODO: We should get 200 or 404 status responses from action but it does not work
       }
     }
   }
