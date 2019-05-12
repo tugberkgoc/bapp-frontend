@@ -4,18 +4,23 @@
     <div class="wordCloud">
       <vue-word-cloud :words="WORD_CLOUD">
         <template slot-scope="{text, weight, word}">
-          <div v-tooltip="'Word: ' + text + ', Frequency: ' + weight" :title="weight" style="cursor: pointer;" @click="onWordClick(word)">
+          <div v-tooltip="'Word: ' + text + ', Frequency: ' + weight" style="cursor: pointer;"
+               @click="onWordClick(word)">
             {{ text }}
           </div>
         </template>
       </vue-word-cloud>
     </div>
 
+    <v-divider class="mx-5"
+               inset
+               vertical></v-divider>
+
     <div class="checkboxes">
 
-        <h1 style="margin-bottom: 20px;">CLEANING OPTIONS</h1>
+      <h1 style="margin-bottom: 20px;">Cleaning Options</h1>
 
-      <div style="margin-left: 5vw;">
+      <div>
         <div v-for="c in checkboxes">
           <v-checkbox
               v-model="c.value"
@@ -25,7 +30,7 @@
       </div>
 
       <v-text-field
-          style="width: 20vw;"
+          style=""
           label="How many words do you want to get?"
           v-model="howMany"
       ></v-text-field>
@@ -33,7 +38,9 @@
       <v-btn
           class="continue"
           color="primary"
-          @click="isActive">
+          @click="isActive"
+          :loading="loading"
+      >
         SUBMIT
       </v-btn>
 
@@ -56,7 +63,8 @@
           {label: "NON-ASCII", value: false},
           {label: "STOP WORDS", value: false}
         ],
-        howMany: 50
+        howMany: 50,
+        loading: false
       }
     },
     computed: {
@@ -72,24 +80,23 @@
         SET_READY: 'SET_READY'
 
       }),
-      ...mapActions({
-        CLEAN_PARAMETERS: "CLEAN_PARAMETERS"
-      }),
+      ...mapActions({}),
       onWordClick(word) {
         this.POP_WORD_CLOUD(word)
       },
       isActive() {
+        this.loading = true
         let payload = []
         payload.push(this.UUID)
         let checkboxes = []
         this.checkboxes.forEach(x => {
-          if(x.value === true) {
+          if (x.value === true) {
             checkboxes.push(x.label)
           }
         })
         payload.push(checkboxes)
         payload.push(this.howMany)
-        this.CLEAN_PARAMETERS(payload)
+        this.$store.dispatch("CLEAN_PARAMETERS", payload).then(() => this.loading = false) //TODO: We should get 200 or 404 status responses from action but it does not work
       }
     }
   }
@@ -107,7 +114,7 @@
     margin-top: 25vh;
     width: 20vw;
     height 60vh;
-    text-align: center;
+    text-align: left;
   }
 
 </style>

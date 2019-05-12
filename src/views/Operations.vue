@@ -7,7 +7,7 @@
 
         <v-stepper-header>
 
-          <v-stepper-step :complete="E1 > 1" step="1">Upload Data</v-stepper-step> <!-- editable -->
+          <v-stepper-step :complete="E1 > 1" step="1">Preparing Data</v-stepper-step> <!-- editable -->
 
           <v-divider></v-divider>
 
@@ -25,7 +25,7 @@
 
         <v-stepper-items>
           <v-stepper-content step="1">
-
+              <h1>Please choose method from tabs.</h1>
             <UploadTabs/>
 
           </v-stepper-content>

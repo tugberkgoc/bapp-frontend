@@ -102,7 +102,7 @@ export default new Vuex.Store({
       context.commit("SET_CHAT", data);
     },
     CLEAN_PARAMETERS: async (context, payload) => {
-      axios.post('https://corpuslivetest.herokuapp.com/api/cleaning/', {
+      await axios.post('https://corpuslivetest.herokuapp.com/api/cleaning/', {
         uuid: payload[0],
         checkboxes: payload[1],
         mostCommon: payload[2],
@@ -132,6 +132,9 @@ export default new Vuex.Store({
           context.commit("SET_JSON_TABLE", table)
           context.commit("SET_JSON_FILE", payload)
           context.commit("SET_READY", true)
+          return 200
+        } else {
+          return 404
         }
       })
     },
