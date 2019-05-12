@@ -11,11 +11,15 @@
       </vue-word-cloud>
     </div>
 
+    <v-divider class="mx-5"
+               inset
+               vertical></v-divider>
+
     <div class="checkboxes">
 
-        <h1 style="margin-bottom: 20px;">CLEANING OPTIONS</h1>
+        <h1 style="margin-bottom: 20px;">Cleaning Options</h1>
 
-      <div style="margin-left: 5vw;">
+      <div>
         <div v-for="c in checkboxes">
           <v-checkbox
               v-model="c.value"
@@ -25,7 +29,7 @@
       </div>
 
       <v-text-field
-          style="width: 20vw;"
+          style=""
           label="How many words do you want to get?"
           v-model="howMany"
       ></v-text-field>
@@ -33,7 +37,9 @@
       <v-btn
           class="continue"
           color="primary"
-          @click="isActive">
+          @click="isActive"
+          :loading="loading"
+      >
         SUBMIT
       </v-btn>
 
@@ -56,7 +62,8 @@
           {label: "NON-ASCII", value: false},
           {label: "STOP WORDS", value: false}
         ],
-        howMany: 50
+        howMany: 50,
+        loading: false
       }
     },
     computed: {
@@ -79,6 +86,7 @@
         this.POP_WORD_CLOUD(word)
       },
       isActive() {
+        this.loading = true //TODO: After receiving data from server turn as false
         let payload = []
         payload.push(this.UUID)
         let checkboxes = []
@@ -107,7 +115,7 @@
     margin-top: 25vh;
     width: 20vw;
     height 60vh;
-    text-align: center;
+    text-align: left;
   }
 
 </style>

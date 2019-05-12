@@ -6,10 +6,13 @@
         :key="n"
         ripple
     >
+      <v-icon class="mr-1" v-if="n==='UPLOAD'" color="">cloud_upload</v-icon>
+      <v-icon class="mr-1" v-if="n==='QUERY'" color="">search</v-icon>
       {{ n }}
     </v-tab>
 
     <v-tab-item :key="1">
+
       <Upload/>
     </v-tab-item>
 
