@@ -25,7 +25,7 @@
 
         <v-stepper-items>
           <v-stepper-content step="1">
-              <h1>Please choose method from tabs.</h1>
+            <h1>Please choose method from tabs.</h1>
             <UploadTabs/>
 
           </v-stepper-content>
@@ -123,27 +123,35 @@
       }),
       increaseStep() {
         let step = parseInt(this.$store.getters.E1)
+        if (step !== 2) {
+          this.SET_READY(false)
+        }
         if (step !== 4) {
           this.SET_E1(step + 1)
           if (parseInt(this.$store.getters.E1) === 3) {
             window.location.reload()
           }
         }
-        if(step === 1) {
+        if (step === 1) {
           this.SET_BUTTON_NAME('Back')
           this.buttonName = 'Back'
         }
-        this.SET_READY(false)
+
+
       },
       back() {
         let step = parseInt(this.$store.getters.E1)
         if (step !== 1) {
           this.SET_E1(step - 1);
         }
-        if(step === 2) {
+        if (step === 2) {
           this.SET_BUTTON_NAME('Cancel')
           this.buttonName = 'Cancel'
           // this.SET_ZERO()
+        }
+        if (step === 4) {
+          this.SET_READY(true)
+          window.location.reload()
         }
       },
       defaultState() {
