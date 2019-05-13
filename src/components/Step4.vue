@@ -20,10 +20,19 @@
         label="Data (Click and copy to clipboard)"
         :value="beautifyJSON()"
     ></v-textarea>
+    <h1>You can download as</h1>
+    <v-radio-group row style="display: inline-block;" v-model="fileType" >
+      <v-radio label="txt" value="txt"></v-radio>
+      <v-radio label="json" value="json"></v-radio>
+      <v-radio label="csv" value="csv"></v-radio>
+      <v-radio label="xls" value="xls"></v-radio>
+    </v-radio-group>
+    <br>
     <v-btn color="success" v-on:click="downloadJsonFile">
       <i style="font-size: large" class="mr-2 fas fa-download"></i>
       Download
     </v-btn>
+    <br><br><br><br><br>
 
   </div>
 </template>
@@ -35,7 +44,8 @@
   export default {
     data: () => {
       return {
-        isAlert: false
+        isAlert: false,
+        fileType: 'txt',
       }
     },
     methods: {
@@ -73,7 +83,7 @@
       downloadJsonFile() {
         const data = this.JSON_TABLE
         const fileName = 'data'
-        const exportType = 'json'
+        const exportType = this.fileType
 
         exportFromJSON({data, fileName, exportType})
       }
