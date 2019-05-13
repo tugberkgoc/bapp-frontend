@@ -18,7 +18,7 @@
 
     <div class="checkboxes">
 
-      <h1 style="margin-bottom: 20px;">Cleaning Options</h1>
+      <h1 style="margin-bottom: 20px;">Select Cleaning Options</h1>
 
       <div>
         <div v-for="c in checkboxes">
@@ -60,8 +60,8 @@
     data: () => {
       return {
         checkboxes: [
-          {label: "NON-ASCII", value: false},
-          {label: "STOP WORDS", value: false}
+          {label: "Stop Words", value: false},
+          {label: "Punctuations", value: false}
         ],
         howMany: 50,
         loading: false
