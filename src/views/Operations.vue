@@ -67,12 +67,12 @@
 
         <v-divider></v-divider>
 
-        <v-btn
-            class="default"
-            color="primary"
-            @click="defaultState">
-          DEFAULT
-        </v-btn>
+        <!--<v-btn-->
+            <!--class="default"-->
+            <!--color="primary"-->
+            <!--@click="defaultState">-->
+          <!--DEFAULT-->
+        <!--</v-btn>-->
 
         <v-btn
             class="continue"
