@@ -136,8 +136,6 @@
           this.SET_BUTTON_NAME('Back')
           this.buttonName = 'Back'
         }
-
-
       },
       back() {
         let step = parseInt(this.$store.getters.E1)
