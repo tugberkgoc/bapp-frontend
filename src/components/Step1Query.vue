@@ -1,48 +1,36 @@
 <template>
   <div id="app">
+    <v-container fluid grid-list-md>
+      <v-layout row wrap>
+        <v-flex offset-md4 md4>
+          <v-layout id="query" column>
 
-    <v-layout id="query" column>
+            <v-combobox
+                v-model="state"
+                label="Query"
+                :items="states"
+                v-on:keyup="enterPressed"
+                @input.native="debounce"
+            ></v-combobox>
 
-      <v-combobox
-          v-model="state"
-          label="Query"
-          :items="states"
-          v-on:keyup="enterPressed"
-          @input.native="debounce"
-      ></v-combobox>
+            <div v-for="t in texts">
+              <v-text-field
+                  v-if="t.bool"
+                  v-bind:value="t.text"
+                  @click:clear="t.bool = false"
+                  readonly
+                  single-line
+                  solo
+                  clearable>
+              </v-text-field>
+            </div>
 
-      <!--<v-select-->
-          <!--v-model="state"-->
-          <!--label="Select"-->
-          <!--:items="states"-->
-          <!--v-on:keyup="enterPressed"-->
-          <!--@input.native="debounce"-->
-          <!--autocomplete-->
-      <!--&gt;</v-select>-->
+            <v-btn color="info">Query from Database</v-btn>
 
-      <!--<v-text-field-->
-      <!--label="Query"-->
-      <!--v-model="query"-->
-      <!--v-on:keyup="enterPressed"-->
-      <!--&gt;-->
-      <!--</v-text-field>-->
-
-      <div v-for="t in texts">
-        <v-text-field
-            v-if="t.bool"
-            v-bind:value="t.text"
-            @click:clear="t.bool = false"
-            readonly
-            single-line
-            solo
-            clearable>
-        </v-text-field>
-      </div>
-
-      <v-btn color="info" style="width: 13vw; margin-left: 8.5vw;">Query from Database</v-btn>
-
-    </v-layout>
-
+          </v-layout>
+        </v-flex>
+      </v-layout>
+    </v-container>
   </div>
 </template>
 
@@ -57,8 +45,7 @@
         states: []
       }
     },
-    computed: {
-    },
+    computed: {},
     components: {},
     methods: {
       afterComplete(file) {
@@ -94,6 +81,7 @@
         if (e.key === "Enter" && this.state) {
           this.texts.push({text: this.state, bool: true})
           this.state = null
+          this.states = []
         }
       },
       debounce(event) {
@@ -119,9 +107,7 @@
   }
 
   #query {
-    width: 30vw;
     margin-top: 5vh;
-    margin-left: 35vw;
   }
 
 </style>
