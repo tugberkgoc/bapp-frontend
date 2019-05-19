@@ -3,26 +3,26 @@
 
     <v-layout id="query" column>
 
-      <v-combobox
-          label="Query"
-          v-model="query"
-          v-on:keyup="enterPressed"
-          :items="items"
-      ></v-combobox>
+      <!--<v-combobox-->
+      <!--label="Query"-->
+      <!--v-model="query"-->
+      <!--v-on:keyup="enterPressed"-->
+      <!--:items="states"-->
+      <!--&gt;</v-combobox>-->
 
-      <!--<v-select-->
-          <!--v-model="state"-->
-          <!--label="Select"-->
-          <!--:items="states"-->
-          <!--v-on:keyup="enterPressed"-->
-          <!--@input.native="loadStates"-->
-          <!--autocomplete-->
-      <!--&gt;</v-select>-->
+      <v-select
+          v-model="state"
+          label="Select"
+          :items="states"
+          v-on:keyup="enterPressed"
+          @input.native="debounce"
+          autocomplete
+      ></v-select>
 
       <!--<v-text-field-->
-          <!--label="Query"-->
-          <!--v-model="query"-->
-          <!--v-on:keyup="enterPressed"-->
+      <!--label="Query"-->
+      <!--v-model="query"-->
+      <!--v-on:keyup="enterPressed"-->
       <!--&gt;-->
       <!--</v-text-field>-->
 
@@ -46,16 +46,20 @@
 </template>
 
 <script>
-  import debounce from 'debounce'
+  import axios from 'axios'
 
   export default {
-    data: () => ({
-      query: null,
-      texts: [],
-      items: ["Lorem", "Ipsum", "Dolerom"],
-      state: null,
-      states: []
-    }),
+    data: () => {
+      return {
+        query: null,
+        texts: [],
+        items: ["Lorem", "Ipsum", "Dolerom"],
+        state: null,
+        states: []
+      }
+    },
+    computed: {
+    },
     components: {},
     methods: {
       afterComplete(file) {
@@ -93,13 +97,18 @@
           this.query = null
         }
       },
-      loadStates: debounce((event) => {
-        if (event.target.value.length > 2) {
-          axios.get(`/api/states?q=${event.target.value}`).then(({ data }) => {
-            this.states = data
+      debounce(event) {
+        if (event.target.value.length > 1) {
+          axios.post("https://corpuslivetest.herokuapp.com/api/query/", {query: event.target.value}).then(({data}) => {
+            let temp = JSON.parse(data)
+            let tempArray = []
+            temp.data.forEach(x => {
+              tempArray.push(x.filename)
+            })
+            this.states = tempArray
           })
         }
-      }, 200)
+      },
     }
   };
 </script>
