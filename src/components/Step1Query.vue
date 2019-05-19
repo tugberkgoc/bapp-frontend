@@ -3,21 +3,22 @@
 
     <v-layout id="query" column>
 
-      <!--<v-combobox-->
-      <!--label="Query"-->
-      <!--v-model="query"-->
-      <!--v-on:keyup="enterPressed"-->
-      <!--:items="states"-->
-      <!--&gt;</v-combobox>-->
-
-      <v-select
+      <v-combobox
           v-model="state"
-          label="Select"
+          label="Query"
           :items="states"
           v-on:keyup="enterPressed"
           @input.native="debounce"
-          autocomplete
-      ></v-select>
+      ></v-combobox>
+
+      <!--<v-select-->
+          <!--v-model="state"-->
+          <!--label="Select"-->
+          <!--:items="states"-->
+          <!--v-on:keyup="enterPressed"-->
+          <!--@input.native="debounce"-->
+          <!--autocomplete-->
+      <!--&gt;</v-select>-->
 
       <!--<v-text-field-->
       <!--label="Query"-->
@@ -51,9 +52,7 @@
   export default {
     data: () => {
       return {
-        query: null,
         texts: [],
-        items: ["Lorem", "Ipsum", "Dolerom"],
         state: null,
         states: []
       }
@@ -92,9 +91,9 @@
         this.$store.dispatch("SET_JSON_FILE", payload).then()
       },
       enterPressed(e) {
-        if (e.key === "Enter" && this.query) {
-          this.texts.push({text: this.query, bool: true})
-          this.query = null
+        if (e.key === "Enter" && this.state) {
+          this.texts.push({text: this.state, bool: true})
+          this.state = null
         }
       },
       debounce(event) {
