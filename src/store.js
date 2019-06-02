@@ -102,7 +102,7 @@ export default new Vuex.Store({
       context.commit("SET_CHAT", data);
     },
     CLEAN_PARAMETERS: async (context, payload) => {
-      await axios.post('http://localhost:8000/api/cleaning/', {
+      await axios.post('http://localhost:3131/api/cleaning/', {
         uuid: payload[0],
         checkboxes: payload[1],
         mostCommon: payload[2],
