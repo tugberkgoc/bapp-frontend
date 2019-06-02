@@ -39,7 +39,7 @@
   export default {
     data: () => ({
       dropOptions: {
-        url: "https://corpuslivetest.herokuapp.com/api/upload/",
+        url: "http://localhost:8000/api/upload/",
         maxFilesize: 5, // MB
         maxFiles: 4,
         chunking: false,

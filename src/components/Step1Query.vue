@@ -86,7 +86,7 @@
       },
       debounce(event) {
         if (event.target.value.length > 1) {
-          axios.post("https://corpuslivetest.herokuapp.com/api/query/", {query: event.target.value}).then(({data}) => {
+          axios.post("http://localhost:8000/api/query/", {query: event.target.value}).then(({data}) => {
             let temp = JSON.parse(data)
             let tempArray = []
             temp.data.forEach(x => {
