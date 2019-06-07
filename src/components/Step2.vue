@@ -1,5 +1,5 @@
 <template>
-  <v-layout v-if="E1 === '2'" row style="">
+  <v-layout v-if="STEP_NUMBER === '2'" row style="">
 
     <div class="wordCloud">
       <vue-word-cloud :words="WORD_CLOUD">
@@ -51,7 +51,7 @@
 
 <script>
   import vueWordCloud from 'vuewordcloud'
-  import {mapState, mapMutations, mapActions} from 'vuex'
+  import {mapMutations, mapActions, mapGetters} from 'vuex'
 
   export default {
     components: {
@@ -68,8 +68,8 @@
       }
     },
     computed: {
-      ...mapState({
-        E1: 'E1',
+      ...mapGetters({
+        STEP_NUMBER: 'STEP_NUMBER',
         WORD_CLOUD: 'WORD_CLOUD',
         UUID: "UUID"
       })
@@ -78,7 +78,6 @@
       ...mapMutations({
         POP_WORD_CLOUD: 'POP_WORD_CLOUD',
         SET_READY: 'SET_READY'
-
       }),
       ...mapActions({}),
       onWordClick(word) {
