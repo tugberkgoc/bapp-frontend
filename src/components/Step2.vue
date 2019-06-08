@@ -1,5 +1,5 @@
 <template>
-  <v-layout v-if="E1 === '2'" row style="">
+  <v-layout v-if="STEP_NUMBER === '2'" row style="">
 
     <div class="wordCloud">
       <vue-word-cloud :words="WORD_CLOUD">
@@ -33,6 +33,7 @@
           style=""
           label="How many words do you want to get?"
           v-model="howMany"
+          v-on:keyup="enterPressed"
       ></v-text-field>
 
       <v-btn
@@ -51,7 +52,7 @@
 
 <script>
   import vueWordCloud from 'vuewordcloud'
-  import {mapState, mapMutations, mapActions} from 'vuex'
+  import {mapMutations, mapActions, mapGetters} from 'vuex'
 
   export default {
     components: {
@@ -68,8 +69,8 @@
       }
     },
     computed: {
-      ...mapState({
-        E1: 'E1',
+      ...mapGetters({
+        STEP_NUMBER: 'STEP_NUMBER',
         WORD_CLOUD: 'WORD_CLOUD',
         UUID: "UUID"
       })
@@ -78,7 +79,6 @@
       ...mapMutations({
         POP_WORD_CLOUD: 'POP_WORD_CLOUD',
         SET_READY: 'SET_READY'
-
       }),
       ...mapActions({}),
       onWordClick(word) {
@@ -97,7 +97,12 @@
         payload.push(checkboxes)
         payload.push(this.howMany)
         this.$store.dispatch("CLEAN_PARAMETERS", payload).then(() => this.loading = false) //TODO: We should get 200 or 404 status responses from action but it does not work
-      }
+      },
+      enterPressed(e) {
+        if (e.key === "Enter" && this.howMany) {
+          this.isActive()
+        }
+      },
     }
   }
 

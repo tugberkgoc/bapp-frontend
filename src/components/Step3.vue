@@ -1,5 +1,5 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <v-layout v-if="E1 === '3'" column style="">
+  <v-layout v-if="STEP_NUMBER === '3'" column style="">
 
     <div class="firstVerticalBar">
 
@@ -50,7 +50,7 @@
 <script>
   import {d3VerticalBar} from 'd3-vs'
   import vueWordCloud from 'vuewordcloud'
-  import {mapState} from 'vuex'
+  import {mapGetters} from 'vuex'
 
   export default {
     components: {
@@ -76,7 +76,7 @@
         ],
       }
     },
-    computed: mapState(['E1', 'JSON_FILE', 'JSON_TABLE', 'WORD_CLOUD']),
+    computed: mapGetters(['STEP_NUMBER', 'JSON_FILE', 'JSON_TABLE', 'WORD_CLOUD']),
     methods: {
     }
   }
