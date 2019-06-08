@@ -35,8 +35,6 @@
 </template>
 
 <script>
-  import axios from 'axios'
-
   export default {
     data: () => {
       return {
@@ -48,35 +46,6 @@
     computed: {},
     components: {},
     methods: {
-      afterComplete(file) {
-        console.log(file);
-        console.log(file.status);
-
-        let payload = []
-        let table = []
-        let wordCloud = []
-        let temp = 1
-        let array = JSON.parse("[" + file.xhr.response + "]");
-        array[0].forEach(x => {
-          payload.push({key: x[0], value: parseInt(x[1])})
-          table.push({number: temp, word: x[0], frequency: parseInt(x[1])})
-          wordCloud.push({
-            text: x[0],
-            weight: parseInt(x[1]),
-            rotation: 1,
-            rotationUnit: 'turn',
-            fontFamily: 'Anton',
-            fontStyle: 'italic', // normal|italic|oblique|initial|inherit
-            fontVariant: '', // normal|small-caps|initial|inherit
-            fontWeight: '', // normal|bold|bolder|lighter|number|initial|inherit
-            color: '#' + (Math.random().toString(16) + "000000").substring(2, 8)
-          })
-          temp = temp + 1
-        })
-        this.$store.dispatch("SET_WORD_CLOUD", wordCloud).then()
-        this.$store.dispatch("SET_JSON_TABLE", table).then()
-        this.$store.dispatch("SET_JSON_FILE", payload).then()
-      },
       enterPressed(e) {
         if (e.key === "Enter" && this.state) {
           this.texts.push({text: this.state, bool: true})
@@ -86,14 +55,7 @@
       },
       debounce(event) {
         if (event.target.value.length > 1) {
-          axios.post("https://corpuslivetest.herokuapp.com/api/query/", {query: event.target.value}).then(({data}) => {
-            let temp = JSON.parse(data)
-            let tempArray = []
-            temp.data.forEach(x => {
-              tempArray.push(x.filename)
-            })
-            this.states = tempArray
-          })
+          this.$store.dispatch('QUERY_DATABASE', event.target.value).then(x => this.states = x)
         }
       },
     }

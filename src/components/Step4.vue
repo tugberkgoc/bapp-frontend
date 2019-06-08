@@ -39,7 +39,7 @@
 
 <script>
   import exportFromJSON from 'export-from-json'
-  import {mapState} from 'vuex'
+  import {mapGetters} from 'vuex'
 
   export default {
     data: () => {
@@ -89,7 +89,7 @@
       }
     },
     computed: {
-      ...mapState({
+      ...mapGetters({
         JSON_TABLE: 'JSON_TABLE',
       })
     },

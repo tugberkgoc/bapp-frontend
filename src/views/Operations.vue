@@ -3,23 +3,23 @@
 
     <v-layout column>
 
-      <v-stepper fixed :value="E1">
+      <v-stepper fixed :value="STEP_NUMBER">
 
         <v-stepper-header>
 
-          <v-stepper-step :complete="E1 > 1" step="1">Preparing Data</v-stepper-step> <!-- editable -->
+          <v-stepper-step :complete="STEP_NUMBER > 1" step="1">Preparing Data</v-stepper-step> <!-- editable -->
 
           <v-divider></v-divider>
 
-          <v-stepper-step :complete="E1 > 2" step="2">Preview - Processing</v-stepper-step>
+          <v-stepper-step :complete="STEP_NUMBER > 2" step="2">Preview - Processing</v-stepper-step>
 
           <v-divider></v-divider>
 
-          <v-stepper-step :complete="E1 > 3" step="3">Cleaning</v-stepper-step>
+          <v-stepper-step :complete="STEP_NUMBER > 3" step="3">Cleaning</v-stepper-step>
 
           <v-divider></v-divider>
 
-          <v-stepper-step :complete="E1 > 4" step="4">Download</v-stepper-step>
+          <v-stepper-step :complete="STEP_NUMBER > 4" step="4">Download</v-stepper-step>
 
         </v-stepper-header>
 
@@ -94,7 +94,7 @@
   import Step4 from '../components/Step4'
   import UploadTabs from './UploadTabs'
 
-  import {mapState, mapMutations} from 'vuex'
+  import {mapMutations, mapGetters} from 'vuex'
 
   export default {
     components: {
@@ -109,26 +109,33 @@
       }
     },
     computed: {
-      ...mapState(['E1', 'READY', 'BUTTON_NAME'])
+      ...mapGetters({
+        READY: 'READY',
+        STEP_NUMBER: 'STEP_NUMBER',
+        BUTTON_NAME: 'BUTTON_NAME',
+      }),
+    },
+    updated() {
+      this.buttonName = this.BUTTON_NAME;
     },
     created() {
-      this.buttonName = this.$store.getters.BUTTON_NAME;
+      this.buttonName = this.BUTTON_NAME;
     },
     methods: {
       ...mapMutations({
         SET_READY: 'SET_READY',
-        SET_E1: 'SET_E1',
+        SET_STEP_NUMBER: 'SET_STEP_NUMBER',
         SET_BUTTON_NAME: 'SET_BUTTON_NAME',
-        SET_ZERO: 'SET_ZERO'
+        SET_DEFAULT_STATE: 'SET_DEFAULT_STATE'
       }),
       increaseStep() {
-        let step = parseInt(this.$store.getters.E1)
+        let step = parseInt(this.STEP_NUMBER)
         if (step !== 2) {
           this.SET_READY(false)
         }
         if (step !== 4) {
-          this.SET_E1(step + 1)
-          if (parseInt(this.$store.getters.E1) === 3) {
+          this.SET_STEP_NUMBER(step + 1)
+          if (parseInt(this.STEP_NUMBER) === 3) {
             window.location.reload()
           }
         }
@@ -138,14 +145,14 @@
         }
       },
       back() {
-        let step = parseInt(this.$store.getters.E1)
+        let step = parseInt(this.STEP_NUMBER)
         if (step !== 1) {
-          this.SET_E1(step - 1);
+          this.SET_STEP_NUMBER(step - 1);
         }
         if (step === 2) {
           this.SET_BUTTON_NAME('Cancel')
           this.buttonName = 'Cancel'
-          // this.SET_ZERO()
+          // this.SET_DEFAULT_STATE()
         }
         if (step === 4) {
           this.SET_READY(true)
@@ -153,7 +160,7 @@
         }
       },
       defaultState() {
-        this.$store.dispatch("SET_ZERO").then()
+        this.SET_DEFAULT_STATE()
       },
     }
   }
